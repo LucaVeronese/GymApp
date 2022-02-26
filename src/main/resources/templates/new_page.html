@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Home Page</title>
@@ -14,13 +12,19 @@
 <body>
 	<div class="container text-center">
 		<div>
-			<h1>You have sign up successfully</h1>
+			<h1>NEW PAGE</h1>
 		</div>
 		<div>
-			<h3>
-				<a th:href="@{/login}" th:object="${gym}">Log in</a>
-			</h3>
+			<form th:action="@{/main_user_page}" method="post"
+				th:object="${gym}">
+				<label>new page</label> <input type="text" th:field="*{gymName}">
+				<div>
+					<button type="submit" class="btn btn-primary">NEW PAGE</button>
+				</div>
+			</form>
 		</div>
 	</div>
+
+
 </body>
 </html>

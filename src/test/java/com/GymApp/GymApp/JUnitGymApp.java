@@ -41,8 +41,18 @@ class JUnitGymApp {
     public void testFindGymByUsername() {
     	String username = "Username";
     	
-    	Gym gym = repo.findGymByUsername(username);
+    	Gym gym = repo.findByUsername(username);
     	
     	assertNotNull(gym);
     }
+    
+    /*@Test
+    public void testFindGymByEmail() {
+    	String email = "gym@email.com";
+    	
+    	Gym gym = repo.findGymByUsername(email);
+    	
+    	assertNotNull(gym);
+    }*/
+    
 }

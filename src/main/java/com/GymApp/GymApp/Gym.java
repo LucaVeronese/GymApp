@@ -1,51 +1,66 @@
 package com.GymApp.GymApp;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.boot.context.properties.bind.Name;
+
 
 @Entity
 @Table(name = "Gym")
-public class Gym {
-
+public class Gym { 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "gym_id")
 	private long gymId;
 	
+	@NotBlank
 	@Column(name = "gym_name")
 	private String gymName;
 	
-	@Column(name = "gym_email", unique = true, nullable = false)
+	@NotBlank
+	@Column(name = "gym_email")
+	//@Email(message = "Invalid email.")
 	private String gymEmail;
 	
+	@NotBlank
 	@Column(name = "gym_username")
+	@Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters.")
 	private String gymUsername;
 	
 	@Column(name = "gym_password")
+	@ValidPassword
 	private String gymPassword;
+	
+	private String gymPasswordConfirmed;
 	
 	//needs to create a Password and Username field - update database and gym_signup_form
 	public Gym() {}
 
-	public Gym(long gymId, String gymName, String gymEmail, String gymUsername, String gymPassword) {
+	public Gym(long gymId, String gymName, String gymEmail, String gymUsername, String gymPassword, String gymPasswordConfirmed) {
 		this.gymId = gymId;
 		this.gymName = gymName;
 		this.gymEmail = gymEmail;
 		this.gymUsername = gymUsername;
 		this.gymPassword = gymPassword;
+		this.gymPasswordConfirmed = gymPasswordConfirmed;
 	}
 	
-	public Gym(String gymName, String gymEmail, String gymUsername, String gymPassword) {
+	public Gym(String gymName, String gymEmail, String gymUsername, String gymPassword, String gymPasswordConfirmed) {
 		this.gymName = gymName;
 		this.gymEmail = gymEmail;
 		this.gymUsername = gymUsername;
 		this.gymPassword = gymPassword;
+		this.gymPasswordConfirmed = gymPasswordConfirmed;
 	}
 
 	public long getGymId() {
@@ -85,9 +100,18 @@ public class Gym {
 	}
 
 	public void setGymPassword(String Password) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		/*BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encodedPassword = encoder.encode(Password);
-		gymPassword = encodedPassword;
+		gymPassword = encodedPassword;*/
+		this.gymPassword = Password;
+	}
+
+	public String getGymPasswordConfirmed() {
+		return gymPasswordConfirmed;
+	}
+
+	public void setGymPasswordConfirmed(String gymPasswordConfirmed) {
+		this.gymPasswordConfirmed = gymPasswordConfirmed;
 	}
 
 	@Override

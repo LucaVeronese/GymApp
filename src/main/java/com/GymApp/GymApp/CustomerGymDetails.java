@@ -1,4 +1,3 @@
-
 package com.GymApp.GymApp;
 
 import java.util.Collection;
