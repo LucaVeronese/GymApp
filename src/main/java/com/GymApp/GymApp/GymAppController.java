@@ -77,6 +77,7 @@ public class GymAppController {
 		model.setViewName("user_login");
 		model.addObject("authGym", new Gym());
 		return model;
+		
 	}
 
 	@PostMapping("/login")
