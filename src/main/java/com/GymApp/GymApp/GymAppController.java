@@ -7,16 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 import org.apache.commons.validator.routines.EmailValidator;
 
 @Controller
 public class GymAppController {
+	
+	Gym activeGym;
 
 	@Autowired
 	GymRepository gymRepo;
+	
+	@Autowired
+	ProgramRepository programRepo;
 
 	@Autowired
 	CustomGymDetailsService gymService;
@@ -90,34 +95,27 @@ public class GymAppController {
 			model.setViewName("user_login");
 			bindingResult.reject("gymEmail");
 			bindingResult.reject("gymPassword");
-			return model;
 		} else {
 			model.setViewName("main_user_page");
-			return model;
+			activeGym = checkGym;
+			//model.addObject("gym", activeGym);
 		}
+		return model;
 	}
-
-	/*
-	 * @PostMapping("/login") public String validateLogin(Gym authGym, ModelAndView
-	 * mv) {
-	 * 
-	 * Gym checkGym = gymService.login(authGym.getGymEmail(),
-	 * authGym.getGymPassword());
-	 * 
-	 * if (checkGym == null) { mv.addObject("errorMessage",
-	 * "Invalid email address or password!"); return "user_login"; } else {
-	 * System.out.println(checkGym.toString()); return "main_user_page"; } }
-	 */
-
+	
+	@GetMapping("/main_user_page")
+	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
+		gym = activeGym;
+		Program program = new Program(gym);
+		model.addObject("program", program);
+		model.setViewName("main_user_page");
+		return model;
+	}
+	
 	@PostMapping("/main_user_page")
-	public String mainUserPage() {
-		return "main_user_page";
-	}
-
-	// TEST
-	@GetMapping("/new_page")
-	public ModelAndView newPage(ModelAndView model) {
-		// model.addObject("gym", gym);
+	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
+		System.out.println(activeGym.toString() + " from post");
+		programRepo.save(program);
 		model.setViewName("new_page");
 		return model;
 	}

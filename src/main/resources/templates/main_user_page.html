@@ -12,7 +12,15 @@
 <body>
 	<div class="container text-center">
 		<div>
-			<h1>Successful Login</h1>
+			<h1>Generate Program</h1>
+		</div>
+		<div>
+			<form th:action="@{/main_user_page}" method="post"
+				th:object="${program}">
+				<div>
+					<button type="submit" class="btn btn-primary">Generate</button>
+				</div>
+			</form>
 		</div>
 	</div>
 

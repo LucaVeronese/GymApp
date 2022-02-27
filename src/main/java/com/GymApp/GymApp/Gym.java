@@ -1,18 +1,22 @@
 package com.GymApp.GymApp;
 
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.boot.context.properties.bind.Name;
-
 
 @Entity
 @Table(name = "Gym")
@@ -42,6 +46,11 @@ public class Gym {
 	private String gymPassword;
 	
 	private String gymPasswordConfirmed;
+	
+	//@OneToMany(targetEntity = Program.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	//@JoinColumn(name = "gp_fk", referencedColumnName = "gymId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
+	private List<Program> programs;
 	
 	//needs to create a Password and Username field - update database and gym_signup_form
 	public Gym() {}
