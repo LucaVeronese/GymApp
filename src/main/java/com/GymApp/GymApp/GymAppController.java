@@ -1,34 +1,46 @@
 package com.GymApp.GymApp;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.validator.routines.EmailValidator;
 
 @Controller
 public class GymAppController {
-	
+	                                                                                      
 	Gym activeGym;
 
 	@Autowired
 	GymRepository gymRepo;
 	
 	@Autowired
-	ProgramRepository programRepo;
+	ExerciseRepository exerciseRepo;
+	
+	@Autowired
+	ProgramRepository programRepo; 
 
 	@Autowired
-	CustomGymDetailsService gymService;
+	CustomGymDetailsService gymService;                                         
 
 	@GetMapping("/")
 	public ModelAndView index(ModelAndView model) {
 		model.setViewName("index");
+		
+		//List<Exercise> chest = exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated");
+		//System.out.println(chest.size());
+		
+		UpperDay dayOne = new UpperDay();
+		dayOne.setChestEx(exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated"));
+		dayOne.setByceptsEx(exerciseRepo.findByComplexityAndTypeAndBycepts("Advanced", "Isolated"));
+		System.out.println(dayOne.toString());
+		
 		return model;
 	}
 
@@ -105,8 +117,9 @@ public class GymAppController {
 	
 	@GetMapping("/main_user_page")
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
-		gym = activeGym;
-		Program program = new Program(gym);
+		//gym = activeGym;
+		//Program program = new Program(gym);
+		Program program = new Program();
 		model.addObject("program", program);
 		model.setViewName("main_user_page");
 		return model;
@@ -114,9 +127,10 @@ public class GymAppController {
 	
 	@PostMapping("/main_user_page")
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
-		System.out.println(activeGym.toString() + " from post");
+		//System.out.println(activeGym.toString() + " from post");
+		program.setGym(activeGym);
 		programRepo.save(program);
-		model.setViewName("new_page");
+		model.setViewName("new_page");		
 		return model;
 	}
 }
