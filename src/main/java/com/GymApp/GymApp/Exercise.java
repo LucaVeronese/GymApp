@@ -32,6 +32,12 @@ public class Exercise {
 	@Type(type = "true_false")
 	private Boolean chest;
 	
+	@Column(name = "cardio")
+	@Type(type = "true_false")
+	private Boolean cardio;
+	
+	
+	
 	public Exercise() {}
 
 	public int getExerciseId() {

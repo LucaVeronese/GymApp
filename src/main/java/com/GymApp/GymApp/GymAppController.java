@@ -1,5 +1,6 @@
 package com.GymApp.GymApp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,30 +18,24 @@ public class GymAppController {
 	                                                                                      
 	Gym activeGym;
 
-	@Autowired
-	GymRepository gymRepo;
+	//@Autowired
+	//GymRepository gymRepo;
 	
-	@Autowired
-	ExerciseRepository exerciseRepo;
+	//@Autowired
+	//ExerciseRepository exerciseRepo;
 	
-	@Autowired
-	ProgramRepository programRepo; 
+	//@Autowired
+	//ProgramRepository programRepo; 
 
 	@Autowired
 	CustomGymDetailsService gymService;                                         
+	
+	@Autowired
+	ProgramService programService;
 
 	@GetMapping("/")
 	public ModelAndView index(ModelAndView model) {
 		model.setViewName("index");
-		
-		//List<Exercise> chest = exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated");
-		//System.out.println(chest.size());
-		
-		UpperDay dayOne = new UpperDay();
-		dayOne.setChestEx(exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated"));
-		dayOne.setByceptsEx(exerciseRepo.findByComplexityAndTypeAndBycepts("Advanced", "Isolated"));
-		System.out.println(dayOne.toString());
-		
 		return model;
 	}
 
@@ -82,7 +77,8 @@ public class GymAppController {
 		if (bindingResult.hasErrors()) {
 			model.setViewName("gym_signup_form");
 		} else {
-			gymRepo.save(gym);
+			//gymRepo.save(gym);
+			gymService.saveGym(gym);
 			model.setViewName("gym_signup_complete");
 		}
 		return model;
@@ -129,8 +125,38 @@ public class GymAppController {
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
 		//System.out.println(activeGym.toString() + " from post");
 		program.setGym(activeGym);
-		programRepo.save(program);
+		//programRepo.save(program);
+		programService.save(program);
 		model.setViewName("new_page");		
 		return model;
+	}
+	
+	@GetMapping("/test")
+	public ModelAndView test(ModelAndView model) {
+
+		//List<Exercise> chest = exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated");
+		//System.out.println(chest.size());
+		
+		/*UpperDay dayOne = new UpperDay();
+		String type = "Isolated";
+		dayOne.setChestEx(exerciseRepo.findByComplexityAndTypeAndChest("Beginner", type));
+		dayOne.setByceptsEx(exerciseRepo.findByComplexityAndTypeAndBycepts("Advanced", type));
+		System.out.println(dayOne.toString());*/
+		
+		List<Day> program = new ArrayList<Day>();
+		/*ThreeDayProgram tdp = new ThreeDayProgram("upper", "beginner", "isolated");
+		tdp.setProgram(program);
+		List<Exercise> list = tdp.retrieveExercise();
+		System.out.println(list.toString());
+		System.out.println(tdp.toString());*/
+		
+		List<List<Exercise>> fullProgram = programService.getExercises(program, "upper", "Beginner", "Isolated", 3);
+		
+		model.addObject("fullProgram", fullProgram);
+		System.out.println("Size of fullProgram is " + fullProgram.size());
+		
+		model.setViewName("test");
+		return model;
+		
 	}
 }

@@ -1,54 +1,67 @@
 package com.GymApp.GymApp;
 
 import java.util.List;
+import java.util.Random;
 
-public class UpperDay {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UpperDay extends Day{
 	private List<Exercise> chestEx;
-	private List<Exercise> byceptsEx;
-	private String complexity;
-	private String type;
+	private List<Exercise> bicepEx;
+	//private String complexity;
+	//private String type;
 	
-	public UpperDay(String type) {
+	/*@Autowired
+	ExerciseRepository repo;
+	
+	@Autowired
+	ProgramService programService;
+	
+	Random rand = new Random();
+	*/
+	
+	/*public UpperDay(String type) {
 		this.type = type;
-	}
+	}*/
 	
 	public UpperDay() {}
 
-	public List<Exercise> getChestEx() {
-		return chestEx;
-	}
+	/*public List<Exercise> getChestEx(String complexity, String type) {
+		return repo.findByComplexityAndTypeAndChest(complexity, type);
+	}*/
 
-	public void setChestEx(List<Exercise> chestEx) {
+	/*public Exercise getChestEx(String complexity, String type) {
+		List<Exercise> list = repo.findByComplexityAndTypeAndChest(complexity, type);
+		return list.get(rand.nextInt(list.size()));
+	}*/
+	
+	/*public Exercise getChestEx(String complexity, String type) {
+		return programService.chestExercise(complexity, type);
+	}*/
+	
+	/*public void setChestEx(List<Exercise> chestEx) {
 		this.chestEx = chestEx;
-	}
+	}*/
 
-	public List<Exercise> getByceptsEx() {
-		return byceptsEx;
+	/*public List<Exercise> getByceptsEx(String complexity, String type) {
+		//return byceptsEx;
+		return repo.findByComplexityAndTypeAndBycepts(complexity, type);
+	}*/
+	
+	/*public Exercise getByceptsEx(String complexity, String type) {
+		List<Exercise> list = repo.findByComplexityAndTypeAndBycepts(complexity, type);
+		return list.get(rand.nextInt(list.size()));
 	}
 
 	public void setByceptsEx(List<Exercise> byceptsEx) {
 		this.byceptsEx = byceptsEx;
 	}
-
-	public String getComplexity() {
-		return complexity;
-	}
-
-	public void setComplexity(String complexity) {
-		this.complexity = complexity;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
+*/
 	@Override
 	public String toString() {
-		return "UpperDay [chestEx=" + chestEx + ", byceptsEx=" + byceptsEx + "]";
+		return "UpperDay [chestEx=" + chestEx + ", byceptsEx=" + bicepEx + "]";
 	}
 	
 	
