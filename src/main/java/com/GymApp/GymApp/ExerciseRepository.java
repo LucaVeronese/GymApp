@@ -8,10 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
-	@Query("SELECT e FROM Exercise e WHERE e.complexity = ?1 AND e.type = ?2 AND e.chest = 1")
-	List<Exercise> findByComplexityAndTypeAndChest(String complexity, String type);
-	
 	// By definition, biceps exercises are all isolated
-	@Query("SELECT e FROM Exercise e WHERE e.complexity = ?1 AND e.bycepts = 1")
-	List<Exercise> findByComplexityAndBicep(String complexity);
+	@Query("SELECT e FROM Exercise e WHERE e.complexity = ?1 AND e.type = ?2 AND e.focus = ?3")
+	List<Exercise> findByComplexityAndTypeAndFocus(String complexity, String type, String focus);
 }

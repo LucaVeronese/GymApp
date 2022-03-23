@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProgramService implements UserDetailsService {
 
-	private UpperDay ud;
-	private LowerDay ld;
+	/*private UpperDay ud;
+	private LowerDay ld;*/
 
 	@Autowired
 	ProgramRepository programRepo;
@@ -29,76 +29,117 @@ public class ProgramService implements UserDetailsService {
 		programRepo.save(program);
 	}
 
-	public List<List<Exercise>> getExercises(List<Day> program, String focus, String complexity, String type,
+	public List<List<Exercise>> getExercises(String focus, String complexity, String type,
 			int days) {
-		List<Day> prog = setProgram(program, focus);
-		return retrieveExercise(prog, complexity, type);
+		List<List<Exercise>> program = new ArrayList<List<Exercise>>();
+		return program = setProgram(program, focus, complexity, type, days);
+		//return retrieveExercise(prog, complexity, type);
 	}
 
-	public List<Day> setProgram(List<Day> program, String focus) {
-		ud = new UpperDay();
-		ld = new LowerDay();
-		// UpperDay ud = new UpperDay();
-		// LowerDay ld = new LowerDay();
-		if (focus.equalsIgnoreCase("upper")) {
-			program.add(ud);
-			program.add(ld);
-			program.add(ud);
-		} else {
-			program.add(ld);
-			program.add(ud);
-			program.add(ld);
+	public List<List<Exercise>> setProgram(List<List<Exercise>> program, String focus, String complexity, String type, int days) {
+		
+		if (focus.equalsIgnoreCase("upper"))
+			program.add(getUpperDay(complexity, type));
+		else 
+			//program.add(getLowerDay(complexity, type));
+		
+		//program.add(getLowerDay(complexity, type));
+		program.add(getUpperDay(complexity, type));
+		
+		if (days == 4) {
+			//program.add(getSplitDay(complexity, type));
 		}
+		if (days == 5) {
+			//program.add(getLowerDay(complexity, type));
+			program.add(getUpperDay(complexity, type));
+		}
+		
 		return program;
 	}
-
-	public List<List<Exercise>> retrieveExercise(List<Day> program, String complexity, String type) {
-
-		List<Exercise> day;
+	
+	public List<Exercise> getUpperDay (String complexity, String type){
+		List<Exercise> day = new ArrayList<Exercise>();
+		day.add(getExercise(complexity, type, "Chest"));
+		//day.add(getExercise(complexity, type, "Tricep"));
+		day.add(getExercise(complexity, type, "Bicep"));
+		/*day.add(getExercise(complexity, type, "Back"));
+		day.add(getExercise(complexity, type, "Shoulder"));
+		day.add(getExercise(complexity, type, "Core"));*/
 		
-		List<List<Exercise>> list = new ArrayList<List<Exercise>>();
-
-		for (int i = 0; i < program.size(); i++) {
-			
-			day = new ArrayList<Exercise>();
-			
-			if (program.get(i).equals(ud)) {
-				day.add(chestExercise(complexity, type));
-				day.add(bicepExercise(complexity));
-			} else {
-				day.add(chestExercise(complexity, type));
-				day.add(bicepExercise(complexity));
-			}
-			list.add(day);
+		return day;
+	}
+	
+	public List<Exercise> getLowerDay (String complexity, String type){
+		List<Exercise> day = new ArrayList<Exercise>();
+		for (int i = 0; i < 2; i++) {
+			day.add(getExercise(complexity, type, "Quad"));
+			day.add(getExercise(complexity, type, "Hamstring"));
+			day.add(getExercise(complexity, type, "Glut"));
 		}
+		day.add(getExercise(complexity, type, "Calf"));
 		
-		System.out.println(list.size());
-		
-		return list;
-		//return exerciseUpper;
+		return day;
+	}
+	
+	public List<Exercise> getSplitDay (String complexity, String type){
+		List<Exercise> day = new ArrayList<Exercise>();
+
+		day.add(getExercise(complexity, type, "Chest"));
+		//day.add(getExercise(complexity, type, "Tricep"));
+		day.add(getExercise(complexity, type, "Bicep"));
+		/*day.add(getExercise(complexity, type, "Back"));
+		day.add(getExercise(complexity, type, "Shoulder"));
+		day.add(getExercise(complexity, type, "Quad"));
+		day.add(getExercise(complexity, type, "Hamstring"));
+		day.add(getExercise(complexity, type, "Glut"));*/
+
+		return day;
 	}
 
-	public Exercise chestExercise(String complexity, String type) {
-		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndChest(complexity, type);
+	public Exercise getExercise(String complexity, String type, String focus) {
+		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, focus);
 		if(list.size() >= 1) {
 			Exercise exercise = list.get(rand.nextInt(list.size()));
-			//System.out.println(exercise.toString());
-
 			return exercise;
 		}
 		else return null;
 	}
 	
-	public Exercise bicepExercise(String complexity) {
-		List<Exercise> list = exerciseRepo.findByComplexityAndBicep(complexity);
+	/*public Exercise bicepExercise(String complexity) {
+		List<Exercise> list = exerciseRepo.findByComplexityAndFocus(complexity, "Bicep");
 		if(list.size() >= 1) {
 			Exercise exercise = list.get(rand.nextInt(list.size()));
-			//System.out.println(exercise.toString());
-
 			return exercise;
 		}
 		else return null;
 	}
+	
+	public Exercise tricepExercise(String complexity, String type) {
+		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, "Tricep");
+		if(list.size() >= 1) {
+			Exercise exercise = list.get(rand.nextInt(list.size()));
+			return exercise;
+		}
+		else return null;
+	}
+	
+	public Exercise backExercise(String complexity, String type) {
+		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, "Back");
+		if(list.size() >= 1) {
+			Exercise exercise = list.get(rand.nextInt(list.size()));
+			return exercise;
+		}
+		else return null;
+	}
+	
+	public Exercise shoulderExercise(String complexity, String type) {
+		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, "Back");
+		if(list.size() >= 1) {
+			Exercise exercise = list.get(rand.nextInt(list.size()));
+			return exercise;
+		}
+		else return null;
+	}*/
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

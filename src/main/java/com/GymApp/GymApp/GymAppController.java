@@ -133,27 +133,13 @@ public class GymAppController {
 	
 	@GetMapping("/test")
 	public ModelAndView test(ModelAndView model) {
-
-		//List<Exercise> chest = exerciseRepo.findByComplexityAndTypeAndChest("Beginner", "Isolated");
-		//System.out.println(chest.size());
 		
-		/*UpperDay dayOne = new UpperDay();
-		String type = "Isolated";
-		dayOne.setChestEx(exerciseRepo.findByComplexityAndTypeAndChest("Beginner", type));
-		dayOne.setByceptsEx(exerciseRepo.findByComplexityAndTypeAndBycepts("Advanced", type));
-		System.out.println(dayOne.toString());*/
-		
-		List<Day> program = new ArrayList<Day>();
-		/*ThreeDayProgram tdp = new ThreeDayProgram("upper", "beginner", "isolated");
-		tdp.setProgram(program);
-		List<Exercise> list = tdp.retrieveExercise();
-		System.out.println(list.toString());
-		System.out.println(tdp.toString());*/
-		
-		List<List<Exercise>> fullProgram = programService.getExercises(program, "upper", "Beginner", "Isolated", 3);
+		List<List<Exercise>> fullProgram = programService.getExercises("upper", "Beginner", "Isolated", 3);
 		
 		model.addObject("fullProgram", fullProgram);
 		System.out.println("Size of fullProgram is " + fullProgram.size());
+		System.out.println("fullProgram is " + fullProgram.toString());
+		
 		
 		model.setViewName("test");
 		return model;

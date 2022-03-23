@@ -24,19 +24,8 @@ public class Exercise {
 	@Column(name = "type")
 	private String type;
 	
-	@Column(name = "bycepts")
-	@Type(type = "true_false")
-	private Boolean bycepts;
-	
-	@Column(name = "chest")
-	@Type(type = "true_false")
-	private Boolean chest;
-	
-	@Column(name = "cardio")
-	@Type(type = "true_false")
-	private Boolean cardio;
-	
-	
+	@Column(name = "focus")
+	private String focus;
 	
 	public Exercise() {}
 
@@ -72,25 +61,9 @@ public class Exercise {
 		this.type = type;
 	}
 
-	public boolean isBycepts() {
-		return bycepts;
-	}
-
-	public void setBycepts(boolean bycepts) {
-		this.bycepts = bycepts;
-	}
-
-	public boolean isChest() {
-		return chest;
-	}
-
-	public void setChest(boolean chest) {
-		this.chest = chest;
-	}
-
 	@Override
 	public String toString() {
 		return "Exercise [exerciseId=" + exerciseId + ", exerciseName=" + exerciseName + ", complexity=" + complexity
-				+ ", type=" + type + ", bycepts=" + bycepts + ", chest=" + chest + "]";
+				+ ", type=" + type + ", focus=" + focus + "]";
 	}
 }

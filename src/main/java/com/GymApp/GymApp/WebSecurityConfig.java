@@ -53,9 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// WORKING
-		http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
+		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
 				.loginPage("/user_login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
-				.logoutSuccessUrl("/").permitAll();
+				.logoutSuccessUrl("/").permitAll();*/
+		
+		http.authorizeRequests().antMatchers("/register").authenticated().and().formLogin()
+		.loginPage("/user_login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
+		.logoutSuccessUrl("/").permitAll();
+		
 		http.csrf().disable();
 	}
 
