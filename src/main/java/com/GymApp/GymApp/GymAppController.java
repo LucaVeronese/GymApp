@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,9 @@ public class GymAppController {
 	//ProgramRepository programRepo; 
 
 	@Autowired
-	CustomGymDetailsService gymService;                                         
-	
-	@Autowired
 	ProgramService programService;
+	
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	@GetMapping("/")
 	public ModelAndView index(ModelAndView model) {
@@ -48,8 +48,8 @@ public class GymAppController {
 
 	@PostMapping("/register_complete")
 	public ModelAndView registerComplete(ModelAndView model, @Valid Gym gym, BindingResult bindingResult) {
-		Gym existingEmail = gymService.findByEmail(gym.getGymEmail());
-
+		Gym existingEmail = programService.findByEmail(gym.getGymEmail());
+		
 		// Email validation
 		if (existingEmail != null) {
 			model.addObject("alreadyRegisteredMessage",
@@ -78,7 +78,9 @@ public class GymAppController {
 			model.setViewName("gym_signup_form");
 		} else {
 			//gymRepo.save(gym);
-			gymService.saveGym(gym);
+			gym.setGymPassword(encoder.encode(gym.getGymPassword()));
+			gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
+			programService.saveGym(gym);
 			model.setViewName("gym_signup_complete");
 		}
 		return model;
@@ -95,9 +97,19 @@ public class GymAppController {
 
 	@PostMapping("/login")
 	public ModelAndView loginCheck(Gym authGym, ModelAndView model, BindingResult bindingResult) {
-		Gym checkGym = gymService.login(authGym.getGymEmail(), authGym.getGymPassword());
+		Gym gymWithSameEmailAddress = programService.findByEmail(authGym.getGymEmail());
+		boolean match;
+		
+		if (gymWithSameEmailAddress != null) {
+			match = encoder.matches(authGym.getGymPassword(), gymWithSameEmailAddress.getGymPassword());
+		}
+		else
+			match = false;
+			
+		/*Gym checkGym = programService.login(authGym.getGymEmail(), encoder.encode(authGym.getGymPassword()));
+		System.out.println(authGym.getGymPassword());*/
 
-		if (checkGym == null) {
+		if (match == false) {
 			model.addObject("errorMessage", "Invalid email address or password");
 			model.addObject("authGym", new Gym());
 			model.setViewName("user_login");
@@ -105,7 +117,7 @@ public class GymAppController {
 			bindingResult.reject("gymPassword");
 		} else {
 			model.setViewName("main_user_page");
-			activeGym = checkGym;
+			activeGym = gymWithSameEmailAddress;
 			//model.addObject("gym", activeGym);
 		}
 		return model;

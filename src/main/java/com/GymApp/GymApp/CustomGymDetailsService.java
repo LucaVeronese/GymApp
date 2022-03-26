@@ -6,8 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+/*@Service
 public class CustomGymDetailsService implements UserDetailsService {
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Autowired
 	GymRepository repo;
@@ -33,5 +39,4 @@ public class CustomGymDetailsService implements UserDetailsService {
 		}
 
 		return new CustomerGymDetails(gym);
-	}
-}
+	}*/

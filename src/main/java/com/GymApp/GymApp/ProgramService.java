@@ -23,6 +23,9 @@ public class ProgramService implements UserDetailsService {
 	@Autowired
 	ExerciseRepository exerciseRepo;
 	
+	@Autowired
+	GymRepository repo;
+	
 	private Random rand = new Random();
 
 	public void save(Program program) {
@@ -140,10 +143,28 @@ public class ProgramService implements UserDetailsService {
 		}
 		else return null;
 	}*/
+	
+	public Gym findByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+	
+	public void saveGym(Gym gym) {
+		repo.save(gym);
+	}
+	
+	public Gym login (String email, String password) {
+		return repo.findByEmailAndPassword(email, password);
+	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	// during registration, email cannot be already in database
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Gym gym = repo.findByUsername(email);
+		if (gym == null) {
+			throw new UsernameNotFoundException("Gym not found");
+		}
+
+		return new CustomerGymDetails(gym);
 	}
+
 }
