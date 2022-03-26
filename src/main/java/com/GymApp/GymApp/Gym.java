@@ -71,6 +71,14 @@ public class Gym {
 		this.gymPassword = gymPassword;
 		this.gymPasswordConfirmed = gymPasswordConfirmed;
 	}
+	
+	public Gym(Gym gym) {
+		this.gymName = gym.getGymName();
+		this.gymEmail = gym.getGymEmail();
+		this.gymUsername = gym.getGymUsername();
+		this.gymPassword = gym.getGymPassword();
+		this.gymPasswordConfirmed = gym.getGymPasswordConfirmed();
+	}
 
 	public long getGymId() {
 		return gymId;

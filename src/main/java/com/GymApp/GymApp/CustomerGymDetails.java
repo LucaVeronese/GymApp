@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CustomerGymDetails implements UserDetails {
+public class CustomerGymDetails extends Gym implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	private Gym gym;

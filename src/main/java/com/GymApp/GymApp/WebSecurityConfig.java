@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 	
 	@Autowired
-	UserDetailsService userDetailsService;
+	ProgramService service;
 
 	/*@Bean
 	public UserDetailsService userDetailsService() {
@@ -49,22 +49,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}*/
 
-	@Override
+	//@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//auth.authenticationProvider(authenticationProvider());
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(service).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// WORKING
-		http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
-				.loginPage("/user_login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
-				.logoutSuccessUrl("/").permitAll();
 		
-	/*	http.authorizeRequests().antMatchers("/register").authenticated().and().formLogin()
-		.loginPage("/user_login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
-		.logoutSuccessUrl("/").permitAll();*/
+		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
+				.loginPage("/user_login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
+				.logoutSuccessUrl("/").permitAll();*/
+		
+		// WORKING
+		http.authorizeRequests()
+			.antMatchers("/user/**").authenticated().and().formLogin()
+		.loginPage("/login").defaultSuccessUrl("/main_user_page").permitAll().and().logout()
+		.logoutSuccessUrl("/").permitAll();
 		
 		http.csrf().disable();
 	}

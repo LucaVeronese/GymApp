@@ -3,19 +3,24 @@ package com.GymApp.GymApp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.validator.routines.EmailValidator;
 
 @Controller
-public class GymAppController {
+public class GymAppController implements ErrorController{
 	                                                                                      
 	Gym activeGym;
 
@@ -123,7 +128,7 @@ public class GymAppController {
 		return model;
 	}
 	
-	@GetMapping("/main_user_page")
+	@GetMapping("/user/main_page")
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
 		//gym = activeGym;
 		//Program program = new Program(gym);
@@ -133,7 +138,7 @@ public class GymAppController {
 		return model;
 	}
 	
-	@PostMapping("/main_user_page")
+	@PostMapping("/user/main_page")
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
 		//System.out.println(activeGym.toString() + " from post");
 		program.setGym(activeGym);
@@ -143,7 +148,7 @@ public class GymAppController {
 		return model;
 	}
 	
-	@GetMapping("/test")
+	@GetMapping("/user/test")
 	public ModelAndView test(ModelAndView model) {
 		
 		List<List<Exercise>> fullProgram = programService.getExercises("upper", "Beginner", "Isolated", 3);
@@ -155,6 +160,22 @@ public class GymAppController {
 		
 		model.setViewName("test");
 		return model;
-		
+	}
+	
+	@RequestMapping("/error")
+	public ModelAndView handleError(HttpServletRequest request, ModelAndView model) {
+	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+	    
+	    if (status != null) {
+	        Integer statusCode = Integer.valueOf(status.toString());
+	    
+	        if(statusCode == HttpStatus.NOT_FOUND.value()) {
+	            model.setViewName("error-404");
+	        }
+	        else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+	            model.addObject("error-500");
+	        }
+	    }
+	    return model;
 	}
 }
