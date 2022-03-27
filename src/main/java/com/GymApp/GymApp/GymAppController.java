@@ -141,17 +141,22 @@ public class GymAppController implements ErrorController{
 	@PostMapping("/user/main_page")
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
 		//System.out.println(activeGym.toString() + " from post");
+		UserPreference userPreference = new UserPreference();
 		program.setGym(activeGym);
 		//programRepo.save(program);
 		programService.save(program);
-		model.setViewName("new_page");		
+		
+		model.addObject("userPreference", userPreference);
+		model.setViewName("user_preference");		
 		return model;
 	}
 	
-	@GetMapping("/user/test")
-	public ModelAndView test(ModelAndView model) {
+	@PostMapping("/user/new_program")
+	public ModelAndView test(ModelAndView model, UserPreference userPreference) {
 		
-		List<List<Exercise>> fullProgram = programService.getExercises("upper", "Beginner", "Isolated", 3);
+		System.out.println(userPreference.getFitnessLevel() + userPreference.getDaysPerWeek() + userPreference.getGoal());
+		
+		List<List<Exercise>> fullProgram = programService.getExercises(userPreference.getFocus(), userPreference.getFitnessLevel(), userPreference.getDaysPerWeek(), userPreference.getGoal());
 		
 		model.addObject("fullProgram", fullProgram);
 		System.out.println("Size of fullProgram is " + fullProgram.size());

@@ -32,17 +32,27 @@ public class ProgramService implements UserDetailsService {
 		programRepo.save(program);
 	}
 
-	public List<List<Exercise>> getExercises(String focus, String complexity, String type,
-			int days) {
+	public List<List<Exercise>> getExercises(String focus, String complexity, int days, String goal) {
+		
+		String type;
+		if (days == 3)
+			type = "Compound";
+		else
+			type = "Isolated";
+		
 		List<List<Exercise>> program = new ArrayList<List<Exercise>>();
-		return program = setProgram(program, focus, complexity, type, days);
+		return program = setProgram(program, focus, complexity, type, days, goal);
 		//return retrieveExercise(prog, complexity, type);
 	}
 
-	public List<List<Exercise>> setProgram(List<List<Exercise>> program, String focus, String complexity, String type, int days) {
+	public List<List<Exercise>> setProgram(List<List<Exercise>> program, String focus, String complexity, String type, int days, String goal) {
 		
-		if (focus.equalsIgnoreCase("upper"))
+		if (focus.equalsIgnoreCase("upper")) {
 			program.add(getUpperDay(complexity, type));
+			if (goal.equalsIgnoreCase("Lose")) {
+				program.add(getCardioDay());
+			}
+		}
 		else 
 			//program.add(getLowerDay(complexity, type));
 		
@@ -50,11 +60,18 @@ public class ProgramService implements UserDetailsService {
 		program.add(getUpperDay(complexity, type));
 		
 		if (days == 4) {
-			//program.add(getSplitDay(complexity, type));
+			// We can set the splitDay as a "Compound" day
+			//program.add(getSplitDay(complexity, "Compound"));
+			/*if (goal.equalsIgnoreCase("Lose")) {
+				program.add(getCardioDay());
+			}*/
 		}
 		if (days == 5) {
 			//program.add(getLowerDay(complexity, type));
 			program.add(getUpperDay(complexity, type));
+			/*if (goal.equalsIgnoreCase("Lose")) {
+				program.add(getCardioDay());
+			}*/
 		}
 		
 		return program;
@@ -97,6 +114,10 @@ public class ProgramService implements UserDetailsService {
 		day.add(getExercise(complexity, type, "Glut"));*/
 
 		return day;
+	}
+	
+	public List<Exercise> getCardioDay(){
+		return null;
 	}
 
 	public Exercise getExercise(String complexity, String type, String focus) {
