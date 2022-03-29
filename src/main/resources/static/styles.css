@@ -82,3 +82,42 @@ footer{
 	color: #ffffff;
 	text-align: center;
 }
+
+
+/* Registration Form */
+
+.registration_form{
+	color:#ffffff;
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+	padding-bottom: 20px;
+	padding-top:20px;
+}
+
+.registration_box{
+	max-width:350px;
+	min-width:70px;
+	padding-top:5px;
+	padding-bottom: 40px;
+	padding-left: 40px;
+	background-color:  #35424a;
+	border-radius: 15px;
+}
+
+.registration_box button{
+	width:293px;
+	font-size: 15px;
+	padding: 10px;
+	margin-top:20px;
+	background-color:  #FF3333;
+	border: black 2px solid;
+	color: #ffffff;
+}
+
+.registration_box input{
+	width:280px;
+	font-size:15px;
+	padding: 5px;
+	margin-top:20px;
+}
