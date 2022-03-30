@@ -86,13 +86,13 @@ footer{
 
 /* Registration Form */
 
-.registration_form{
+.registration_area{
 	color:#ffffff;
-	width:80%;
 	margin:auto;
 	overflow:hidden;
 	padding-bottom: 20px;
 	padding-top:20px;
+	background: url('/img/background.jpg') no-repeat 0 -400px;
 }
 
 .registration_box{
@@ -103,6 +103,7 @@ footer{
 	padding-left: 40px;
 	background-color:  #35424a;
 	border-radius: 15px;
+	margin-left: 10%;
 }
 
 .registration_box button{

@@ -13,7 +13,7 @@
 	<div>
 		<h1>Welcome to User Login Page</h1>
 
-		<form th:action="@{/login}" method="post" th:object=${authGym}>
+		<form th:action="@{/user/main}" method="post" th:object=${authGym}>
 			Email : <input type="text" th:field="*{gymEmail}"
 				class="form-control"> Password : <input type="text"
 				th:field="*{gymPassword}" class="form-control"><br>

@@ -96,11 +96,11 @@ public class GymAppController implements ErrorController{
 	public ModelAndView login(ModelAndView model) {
 		model.setViewName("user_login");
 		model.addObject("authGym", new Gym());
+		System.out.println("Get Login");
 		return model;
-		
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/user/main")
 	public ModelAndView loginCheck(Gym authGym, ModelAndView model, BindingResult bindingResult) {
 		Gym gymWithSameEmailAddress = programService.findByEmail(authGym.getGymEmail());
 		boolean match;
@@ -110,6 +110,8 @@ public class GymAppController implements ErrorController{
 		}
 		else
 			match = false;
+		
+		System.out.println(match);
 			
 		/*Gym checkGym = programService.login(authGym.getGymEmail(), encoder.encode(authGym.getGymPassword()));
 		System.out.println(authGym.getGymPassword());*/
@@ -121,14 +123,17 @@ public class GymAppController implements ErrorController{
 			bindingResult.reject("gymEmail");
 			bindingResult.reject("gymPassword");
 		} else {
+			Program program = new Program();
+			model.addObject("program", program);
 			model.setViewName("main_user_page");
+			
 			activeGym = gymWithSameEmailAddress;
 			//model.addObject("gym", activeGym);
 		}
 		return model;
 	}
 	
-	@GetMapping("/user/main_page")
+	/*@GetMapping("/user/main")
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
 		//gym = activeGym;
 		//Program program = new Program(gym);
@@ -136,9 +141,10 @@ public class GymAppController implements ErrorController{
 		model.addObject("program", program);
 		model.setViewName("main_user_page");
 		return model;
-	}
+		return null;
+	}*/
 	
-	@PostMapping("/user/main_page")
+	@PostMapping("/user/new_program")
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
 		//System.out.println(activeGym.toString() + " from post");
 		UserPreference userPreference = new UserPreference();
@@ -151,13 +157,10 @@ public class GymAppController implements ErrorController{
 		return model;
 	}
 	
-	@PostMapping("/user/new_program")
-	public ModelAndView test(ModelAndView model, UserPreference userPreference) {
-		
-		System.out.println(userPreference.getFitnessLevel() + userPreference.getDaysPerWeek() + userPreference.getGoal());
-		
+	@PostMapping("/user/view_program")
+	public ModelAndView test(ModelAndView model, UserPreference userPreference) {		
 		List<List<Exercise>> fullProgram = programService.getExercises(userPreference.getFocus(), userPreference.getFitnessLevel(), userPreference.getDaysPerWeek(), userPreference.getGoal());
-		
+		 
 		model.addObject("fullProgram", fullProgram);
 		System.out.println("Size of fullProgram is " + fullProgram.size());
 		System.out.println("fullProgram is " + fullProgram.toString());
@@ -167,7 +170,7 @@ public class GymAppController implements ErrorController{
 		return model;
 	}
 	
-	@RequestMapping("/error")
+	/*@RequestMapping("/error")
 	public ModelAndView handleError(HttpServletRequest request, ModelAndView model) {
 	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 	    
@@ -182,5 +185,5 @@ public class GymAppController implements ErrorController{
 	        }
 	    }
 	    return model;
-	}
+	}*/
 }

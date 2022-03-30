@@ -49,15 +49,20 @@ public class ProgramService implements UserDetailsService {
 		
 		if (focus.equalsIgnoreCase("upper")) {
 			program.add(getUpperDay(complexity, type));
-			if (goal.equalsIgnoreCase("Lose")) {
+			/*if (goal.equalsIgnoreCase("Lose")) {
 				program.add(getCardioDay());
-			}
+			}*/
 		}
 		else 
 			//program.add(getLowerDay(complexity, type));
 		
 		//program.add(getLowerDay(complexity, type));
 		program.add(getUpperDay(complexity, type));
+		
+		//TEST
+		program.add(getUpperDay(complexity, type));
+		program.add(getUpperDay(complexity, type));
+		//END TEST
 		
 		if (days == 4) {
 			// We can set the splitDay as a "Compound" day
@@ -81,7 +86,9 @@ public class ProgramService implements UserDetailsService {
 		List<Exercise> day = new ArrayList<Exercise>();
 		day.add(getExercise(complexity, type, "Chest"));
 		//day.add(getExercise(complexity, type, "Tricep"));
-		day.add(getExercise(complexity, type, "Bicep"));
+		
+		// per definition, there are no Compound bicep exercise. All bicep ex are of type Isolated
+		day.add(getExercise(complexity, "Isolated", "Bicep"));
 		/*day.add(getExercise(complexity, type, "Back"));
 		day.add(getExercise(complexity, type, "Shoulder"));
 		day.add(getExercise(complexity, type, "Core"));*/
@@ -106,7 +113,7 @@ public class ProgramService implements UserDetailsService {
 
 		day.add(getExercise(complexity, type, "Chest"));
 		//day.add(getExercise(complexity, type, "Tricep"));
-		day.add(getExercise(complexity, type, "Bicep"));
+		day.add(getExercise(complexity, "Isolated", "Bicep"));
 		/*day.add(getExercise(complexity, type, "Back"));
 		day.add(getExercise(complexity, type, "Shoulder"));
 		day.add(getExercise(complexity, type, "Quad"));
@@ -117,6 +124,7 @@ public class ProgramService implements UserDetailsService {
 	}
 	
 	public List<Exercise> getCardioDay(){
+		//TO DO
 		return null;
 	}
 

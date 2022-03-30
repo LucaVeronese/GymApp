@@ -28,11 +28,12 @@
 			</nav>
 		</div>
 	</header>
-	<div class="registration_form">
-		<div class="registration_box">
-			<h2>Register New Account</h2>
+	<div>
+		<div class="registration_area">
+			<div class="registration_box">
+				<h2>Register New Account</h2>
 
-			<!-- <div>
+				<!-- <div>
 			<form th:action="@{/register_complete}" method="post"
 				th:object="${gym}">
 				<div>
@@ -91,63 +92,65 @@
 		</div>
 		 -->
 
-			<table>
-				<form th:action="@{/register_complete}" method="post"
-					th:object="${gym}">
-					<tr>
-						<td><input type="text" th:field="*{gymName}"
-							class="form-control" placeholder="Full Name"></td>
-					</tr>
-					<tr>
-						<td class="error" th:errors="*{gymName}"></td>
-					</tr>
-					<tr>
-						<td><input th:field="*{gymEmail}" class="form-control"
-							placeholder="Email Address"></td>
-					</tr>
-					<tr>
-						<td th:if="${#fields.hasErrors('gymEmail')}"></td>
-					</tr>
-					<tr>
-						<td th:if="${invalidEmail}" th:text="${invalidEmail}"></td>
-					</tr>
-					<tr>
-						<td><input type="text" th:field="*{gymUsername}"
-							class="form-control" placeholder="Username"></td>
-					</tr>
-					<tr>
-						<td th:if="${#fields.hasErrors('gymUsername')}"
-							th:class="${#fields.hasErrors('gymUsername')}? error">
-							<p class="error" th:errors="*{gymUsername}"></p>
-						</td>
-					</tr>
-				<tr>
-					<td><input type="text" th:field="*{gymPassword}"
-						class="form-control" placeholder="Password"></td>
-				</tr>
-				<tr>
-					<td th:each="error: ${#fields.errors('gymPassword')}">
-						<p th:each="message : ${error.split(',')}" th:text="${message}"></p>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="text" th:field="*{gymPasswordConfirmed}"
-						class="form-control" placeholder="Confirm Password"></td>
-				</tr>
-				<tr>
-					<td th:if="${invalidConfirmedPassword}"
-						th:text="${invalidConfirmedPassword}"></td>
-				</tr>
-				<tr>
-					<td>
-						<button type="submit">Create Account</button>
-					</td>
-				</tr>
-				</form>
-			</table>
-			<div th:if="${alreadyRegisteredMessage}" c+-lass="alert alert-danger"
-				role="alert" th:text="${alreadyRegisteredMessage}"></div>
+				<table>
+					<form th:action="@{/register_complete}" method="post"
+						th:object="${gym}">
+						<tr>
+							<td><input type="text" th:field="*{gymName}"
+								class="form-control" placeholder="Full Name"></td>
+						</tr>
+						<tr>
+							<td class="error" th:errors="*{gymName}"></td>
+						</tr>
+						<tr>
+							<td><input th:field="*{gymEmail}" class="form-control"
+								placeholder="Email Address"></td>
+						</tr>
+						<tr>
+							<td th:if="${#fields.hasErrors('gymEmail')}"></td>
+						</tr>
+						<tr>
+							<td th:if="${invalidEmail}" th:text="${invalidEmail}"></td>
+						</tr>
+						<tr>
+							<td><input type="text" th:field="*{gymUsername}"
+								class="form-control" placeholder="Username"></td>
+						</tr>
+						<tr>
+							<td th:if="${#fields.hasErrors('gymUsername')}"
+								th:class="${#fields.hasErrors('gymUsername')}? error">
+								<p class="error" th:errors="*{gymUsername}"></p>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="text" th:field="*{gymPassword}"
+								class="form-control" placeholder="Password"></td>
+						</tr>
+						<tr>
+							<td th:each="error: ${#fields.errors('gymPassword')}">
+								<p th:each="message : ${error.split(',')}" th:text="${message}"></p>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="text" th:field="*{gymPasswordConfirmed}"
+								class="form-control" placeholder="Confirm Password"></td>
+						</tr>
+						<tr>
+							<td th:if="${invalidConfirmedPassword}"
+								th:text="${invalidConfirmedPassword}"></td>
+						</tr>
+						<tr>
+							<td>
+								<button type="submit">Create Account</button>
+							</td>
+						</tr>
+					</form>
+				</table>
+				<div th:if="${alreadyRegisteredMessage}"
+					c+-lass="alert alert-danger" role="alert"
+					th:text="${alreadyRegisteredMessage}"></div>
 
+			</div>
 		</div>
 	</div>
 	<footer>
