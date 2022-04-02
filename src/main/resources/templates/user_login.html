@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>OneMore | Login</title>
-<link href="styles.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
 	<header>
@@ -27,7 +27,7 @@
 			<table>
 				<form th:action="@{/login_page}" method="post" th:object=${authGym}>
 				<tr>
-					<td style="text-align:center;"><h2>User Login</h2></td>
+					<td><h2>User Login</h2></td>
 				</tr>
 				<tr>
 					<td><input type="text" th:field="*{gymEmail}" class="input" placeholder="Email Address"></td>
