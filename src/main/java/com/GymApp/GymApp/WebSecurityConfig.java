@@ -53,14 +53,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//auth.authenticationProvider(authenticationProvider());
 		auth.userDetailsService(service).passwordEncoder(passwordEncoder());
+		
+		/*auth.jdbcAuthentication()
+			.dataSource(dataSource)
+			.usersByUsernameQuery("select gymEmail, gymPassword from Gym where )*/
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//USING THIS FOT TESTING
-		http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
-				.loginPage("/login").permitAll().and().logout()
-				.logoutSuccessUrl("/").permitAll();
+		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
+				.loginPage("/login").defaultSuccessUrl("/user/main_page").permitAll().and().logout()
+				.logoutSuccessUrl("/").permitAll();*/
 		
 		//WORKING - TO BE USED FOR FINAL APP
 		/*http.authorizeRequests()

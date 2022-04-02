@@ -38,7 +38,7 @@ public class GymAppController implements ErrorController{
 	
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-	@GetMapping("/")
+	@GetMapping("/index")
 	public ModelAndView index(ModelAndView model) {
 		model.setViewName("index");
 		return model;
@@ -51,7 +51,7 @@ public class GymAppController implements ErrorController{
 		return model;
 	}
 
-	@PostMapping("/register_complete")
+	@PostMapping("/register")
 	public ModelAndView registerComplete(ModelAndView model, @Valid Gym gym, BindingResult bindingResult) {
 		Gym existingEmail = programService.findByEmail(gym.getGymEmail());
 		
@@ -92,15 +92,23 @@ public class GymAppController implements ErrorController{
 
 	}
 
+	//Directed here from loginPage() in WebSecurity
 	@GetMapping("/login")
+	public ModelAndView newLogin(ModelAndView model) {
+		model.setViewName("user_login");
+		model.addObject("authGym", new Gym());
+		return model;
+	}
+	
+	@GetMapping("/login_page")
 	public ModelAndView login(ModelAndView model) {
 		model.setViewName("user_login");
 		model.addObject("authGym", new Gym());
-		System.out.println("Get Login");
 		return model;
 	}
 
-	@PostMapping("/user/main")
+	//@GetMapping("/user/main")
+	@PostMapping("/login_page")
 	public ModelAndView loginCheck(Gym authGym, ModelAndView model, BindingResult bindingResult) {
 		Gym gymWithSameEmailAddress = programService.findByEmail(authGym.getGymEmail());
 		boolean match;
@@ -133,7 +141,7 @@ public class GymAppController implements ErrorController{
 		return model;
 	}
 	
-	/*@GetMapping("/user/main")
+	@GetMapping("/user/main")
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
 		//gym = activeGym;
 		//Program program = new Program(gym);
@@ -141,8 +149,7 @@ public class GymAppController implements ErrorController{
 		model.addObject("program", program);
 		model.setViewName("main_user_page");
 		return model;
-		return null;
-	}*/
+	}
 	
 	@PostMapping("/user/new_program")
 	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
@@ -167,6 +174,12 @@ public class GymAppController implements ErrorController{
 		
 		
 		model.setViewName("test");
+		return model;
+	}
+	
+	@GetMapping("/about")
+	public ModelAndView about(ModelAndView model) {
+		model.setViewName("about");
 		return model;
 	}
 	

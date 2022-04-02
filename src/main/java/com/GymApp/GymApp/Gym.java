@@ -16,6 +16,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.Name;
 
 @Entity
@@ -46,6 +48,10 @@ public class Gym {
 	private String gymPassword;
 	
 	private String gymPasswordConfirmed;
+
+	//@ColumnDefault(value = "USER")
+	/*@Column(columnDefinition = "varchar(255) default USER")
+	private String enabled;*/
 	
 	//@OneToMany(targetEntity = Program.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	//@JoinColumn(name = "gp_fk", referencedColumnName = "gymId")
