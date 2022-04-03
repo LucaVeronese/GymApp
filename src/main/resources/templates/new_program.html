@@ -27,16 +27,16 @@
 						<th class="title">Repetitions</th>
 					</tr>
 				</thead>
-				<tbody th:each="test: ${fullProgram}">
+				<tbody th:each="daysPerWeek: ${fullProgram}">
 					<tr>
 						<td colspan="4" id="daily_program">Daily Program</td>
 						<!-- <td colspan="2" th:text="${exercises[0]}"></td>  -->
 					</tr>
-					<tr th:each="day: ${test}">
+					<tr th:each="day: ${daysPerWeek}">
 						<td class="data"><span th:text="${day.exerciseName}"></span></td>
 						<td class="data"><span th:text="${day.complexity}"></span></td>
-						<td class="data"><span>Sets</span></td>
-						<td class="data"><span>Reps</span></td>
+						<td class="data"><span th:text="${set}">Sets</span></td>
+						<td class="data"><span th:text="${rep}">Reps</span></td>
 					</tr>
 
 					<!-- <tr>	

@@ -58,6 +58,9 @@ public class Gym {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
 	private List<Program> programs;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
+	private List<UserPreference> userPreferences;
+	
 	//needs to create a Password and Username field - update database and gym_signup_form
 	public Gym() {}
 

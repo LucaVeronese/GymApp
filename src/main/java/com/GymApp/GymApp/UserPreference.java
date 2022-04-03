@@ -1,11 +1,38 @@
 package com.GymApp.GymApp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user_preference")
 public class UserPreference {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int userPreferenceId;
+	
+	@Column(name="fitness_level")
 	private String fitnessLevel;
+	
+	@Column(name="days_per_week")
 	private int daysPerWeek;
+	
+	@Column(name="focus")
 	private String focus;
+	
+	@Column(name="goal")
 	private String goal;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gym_id")
+	private Gym gym;
 	
 	public UserPreference() {}
 
@@ -15,6 +42,14 @@ public class UserPreference {
 		this.daysPerWeek = daysPerWeek;
 		this.focus = focus;
 		this.goal = goal;
+	}
+
+	public Gym getGym() {
+		return gym;
+	}
+
+	public void setGym(Gym gym) {
+		this.gym = gym;
 	}
 
 	public String getFitnessLevel() {

@@ -20,13 +20,14 @@
 		</div>
 		<div class="row user_area">
 			<div>
-				<form th:action="@{/user/new_program}" method="post"
-					th:object="${program}">
+				<!--  <form th:action="@{/user/new_program}" method="post"
+					th:object="${program}"> -->
+				<form th:action="@{/user/new_program}" method="post">
 					<button class="button" type="submit">Generate</button>
 				</form>
 			</div>
 			<div>
-				<form>
+				<form th:action="@{/user/history}" method="get">
 					<button class="button" type="submit">History</button>
 				</form>
 			</div>

@@ -26,6 +26,9 @@ public class ProgramService implements UserDetailsService {
 	@Autowired
 	GymRepository repo;
 	
+	@Autowired
+	UserPreferenceRepository userPreferenceRepo;
+	
 	private Random rand = new Random();
 
 	public void save(Program program) {
@@ -137,6 +140,28 @@ public class ProgramService implements UserDetailsService {
 		else return null;
 	}
 	
+	public String getReps(String goal) {
+		if(goal.equalsIgnoreCase("gain"))
+			return "6-8";
+		else if(goal.equalsIgnoreCase("maintain"))
+			return "8-10";
+		else
+			return "10-12";
+	}
+	
+	public String getSets(String goal) {
+		if(goal.equalsIgnoreCase("gain"))
+			return "4";
+		else
+			return "5";		
+	}
+	
+	public List<Program> history(Gym gym){
+		List<Program> list = programRepo.findByGym(gym);
+		System.out.println(list.size());
+		return list;
+	}
+	
 	/*public Exercise bicepExercise(String complexity) {
 		List<Exercise> list = exerciseRepo.findByComplexityAndFocus(complexity, "Bicep");
 		if(list.size() >= 1) {
@@ -179,6 +204,10 @@ public class ProgramService implements UserDetailsService {
 	
 	public void saveGym(Gym gym) {
 		repo.save(gym);
+	}
+	
+	public void saveUserPreference(UserPreference up) {
+		userPreferenceRepo.save(up);
 	}
 	
 	public Gym login (String email, String password) {

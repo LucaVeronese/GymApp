@@ -131,8 +131,8 @@ public class GymAppController implements ErrorController{
 			bindingResult.reject("gymEmail");
 			bindingResult.reject("gymPassword");
 		} else {
-			Program program = new Program();
-			model.addObject("program", program);
+			//Program program = new Program();
+			//model.addObject("program", program);
 			model.setViewName("main_user_page");
 			
 			activeGym = gymWithSameEmailAddress;
@@ -145,35 +145,53 @@ public class GymAppController implements ErrorController{
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
 		//gym = activeGym;
 		//Program program = new Program(gym);
-		Program program = new Program();
-		model.addObject("program", program);
+		
+		/*Program program = new Program();
+		model.addObject("program", program);*/
 		model.setViewName("main_user_page");
 		return model;
 	}
 	
 	@PostMapping("/user/new_program")
-	public ModelAndView generateNewProgram(ModelAndView model, Program program) {
+	public ModelAndView generateNewProgram(ModelAndView model) {
 		//System.out.println(activeGym.toString() + " from post");
 		UserPreference userPreference = new UserPreference();
-		program.setGym(activeGym);
-		//programRepo.save(program);
-		programService.save(program);
+		Program program = new Program();
 		
+		model.addObject("program", program);
 		model.addObject("userPreference", userPreference);
 		model.setViewName("user_preference");		
 		return model;
 	}
 	
 	@PostMapping("/user/view_program")
-	public ModelAndView test(ModelAndView model, UserPreference userPreference) {		
+	public ModelAndView test(ModelAndView model, UserPreference userPreference, Program program) {
+		userPreference.setGym(activeGym);
+		program.setGym(activeGym);
+
+		programService.saveUserPreference(userPreference);
+		programService.save(program);
+		
 		List<List<Exercise>> fullProgram = programService.getExercises(userPreference.getFocus(), userPreference.getFitnessLevel(), userPreference.getDaysPerWeek(), userPreference.getGoal());
-		 
+		String rep = programService.getReps(userPreference.getGoal());
+		String set = programService.getSets(userPreference.getGoal());
+		
 		model.addObject("fullProgram", fullProgram);
+		model.addObject("rep", rep);
+		model.addObject("set", set);
+		
 		System.out.println("Size of fullProgram is " + fullProgram.size());
 		System.out.println("fullProgram is " + fullProgram.toString());
 		
-		
-		model.setViewName("test");
+		model.setViewName("new_program");
+		return model;
+	}
+	
+	@GetMapping("/user/history")
+	public ModelAndView history(ModelAndView model) {
+		List<Program> list = programService.history(activeGym);
+		model.setViewName("history");
+		model.addObject("numberOfPrograms", list.size());
 		return model;
 	}
 	

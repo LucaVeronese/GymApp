@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>OneMore | History</title>
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div id="title">
+				<h1>OneMore</h1>
+			</div>
+		</div>
+	</header>
+	<section class="main_area">
+		<div class="container">
+			<h1>Your History has <span th:text="${numberOfPrograms}"></span></h1>
+		</div>
+	</section>
+	<footer>
+		<p>Gym App - Copyright &copy; LucaV 2022</p>
+	</footer>
+</body>
+</html>
