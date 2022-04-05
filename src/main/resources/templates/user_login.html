@@ -14,7 +14,7 @@
 			<nav>
 				<ul>
 					<li><a th:href="@{/}">Home</a>
-					<li><a th:href="@{/login_page}" class="current">Login</a>
+					<li><a th:href="@{/login}" class="current">Login</a>
 					<li><a th:href="@{/register}">Register</a>
 					<li><a th:href="@{/about}">About</a>
 				
@@ -25,23 +25,24 @@
 	<section class="registration_area">
 		<div class="input_box" id="login_box">
 			<table>
-				<form th:action="@{/login_page}" method="post" th:object=${authGym}>
+				<form th:action="@{/login}" method="post">
 				<tr>
 					<td><h2>User Login</h2></td>
 				</tr>
 				<tr>
-					<td><input type="text" th:field="*{gymEmail}" class="input" placeholder="Email Address"></td>
+					<td><input type="text" class="input" name = "username" placeholder="Email Address"></td>
 				</tr>
 				<tr>
-					<td><input type="text" th:field="*{gymPassword}" class="input" placeholder="Password"></td>
+					<td><input type="password" class="input" name = "password" placeholder="Password"></td>
 				</tr>
 				<tr>
 					<td><button type="submit" class="button">Login</button></td>
 				</tr>
 				</form>
 			</table>
-			<div th:if="${errorMessage}" role="alert"
-							th:text="${errorMessage}"></div>
+			<!--  <div th:if="${errorMessage}" role="alert"
+							th:text="${errorMessage}"></div> -->
+			<div th:if="${param.error}">Invalid email address or password</div>
 			
 		</div>
 	</section>

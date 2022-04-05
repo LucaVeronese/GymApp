@@ -52,7 +52,9 @@ public class GymAppController implements ErrorController{
 	}
 
 	@PostMapping("/register")
-	public ModelAndView registerComplete(ModelAndView model, @Valid Gym gym, BindingResult bindingResult) {
+	public ModelAndView registerComplete(ModelAndView model, @Valid Gym gym, BindingResult bindingResult 
+			//, Authority authority
+			) {
 		Gym existingEmail = programService.findByEmail(gym.getGymEmail());
 		
 		// Email validation
@@ -83,38 +85,55 @@ public class GymAppController implements ErrorController{
 			model.setViewName("gym_signup_form");
 		} else {
 			//gymRepo.save(gym);
-			gym.setGymPassword(encoder.encode(gym.getGymPassword()));
-			gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
+			
+			// USE THIS ENCODER ON FINAL APP
+			//gym.setGymPassword(encoder.encode(gym.getGymPassword()));
+			//gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
+			
+			// TESTING
+			gym.setGymPassword(gym.getGymPassword());
+			gym.setGymPasswordConfirmed(gym.getGymPassword());
+			//
+			
+			
+			gym.setEnabled(true);
+			gym.setRole("ROLE_USER");
+			
+			//authority.setGym(gym);
+			//authority.setAuthority("USER");
+			
 			programService.saveGym(gym);
+			//programService.saveAuthority(authority);
+			
 			model.setViewName("gym_signup_complete");
 		}
 		return model;
 
 	}
 
-	//Directed here from loginPage() in WebSecurity
 	@GetMapping("/login")
 	public ModelAndView newLogin(ModelAndView model) {
 		model.setViewName("user_login");
-		model.addObject("authGym", new Gym());
+		//model.addObject("authGym", new Gym());
 		return model;
 	}
 	
-	@GetMapping("/login_page")
+	/*@GetMapping("/login_page")
 	public ModelAndView login(ModelAndView model) {
 		model.setViewName("user_login");
 		model.addObject("authGym", new Gym());
 		return model;
-	}
+	}*/
 
 	//@GetMapping("/user/main")
-	@PostMapping("/login_page")
+	/*@PostMapping("/login_page")
 	public ModelAndView loginCheck(Gym authGym, ModelAndView model, BindingResult bindingResult) {
 		Gym gymWithSameEmailAddress = programService.findByEmail(authGym.getGymEmail());
 		boolean match;
 		
 		if (gymWithSameEmailAddress != null) {
-			match = encoder.matches(authGym.getGymPassword(), gymWithSameEmailAddress.getGymPassword());
+			//match = encoder.matches(authGym.getGymPassword(), gymWithSameEmailAddress.getGymPassword());
+			match = true;
 		}
 		else
 			match = false;
@@ -124,7 +143,7 @@ public class GymAppController implements ErrorController{
 		/*Gym checkGym = programService.login(authGym.getGymEmail(), encoder.encode(authGym.getGymPassword()));
 		System.out.println(authGym.getGymPassword());*/
 
-		if (match == false) {
+	/*	if (match == false) {
 			model.addObject("errorMessage", "Invalid email address or password");
 			model.addObject("authGym", new Gym());
 			model.setViewName("user_login");
@@ -139,7 +158,7 @@ public class GymAppController implements ErrorController{
 			//model.addObject("gym", activeGym);
 		}
 		return model;
-	}
+	}*/
 	
 	@GetMapping("/user/main")
 	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {

@@ -31,7 +31,7 @@ public class UserPreference {
 	private String goal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gym_id")
+    @JoinColumn(name = "gym_email")
 	private Gym gym;
 	
 	public UserPreference() {}

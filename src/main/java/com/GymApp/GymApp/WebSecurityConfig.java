@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -24,16 +25,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	ProgramService service;
+	
+	@Autowired
+	UserDetailsService userDetailsService;
 
-	/*@Bean
-	public UserDetailsService userDetailsService() {
-		return new CustomGymDetailsService();
-	}*/
 
 	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public PasswordEncoder getPasswordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
 	}
+	/*public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}*/
 
 	/*@Bean
 	public CustomGymDetailsService gymService() {
@@ -52,27 +55,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	//@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//auth.authenticationProvider(authenticationProvider());
-		auth.userDetailsService(service).passwordEncoder(passwordEncoder());
+		
+		auth.userDetailsService(userDetailsService);
 		
 		/*auth.jdbcAuthentication()
 			.dataSource(dataSource)
-			.usersByUsernameQuery("select gymEmail, gymPassword from Gym where )*/
+			.usersByUsernameQuery("select gym_email, gym_password, enabled from gym where gym_email = ? ")
+			.authoritiesByUsernameQuery("select gym_email, authority from authorities where gym_email = ? ");*/
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		//USING THIS FOT TESTING
+		//USING THIS FOR TESTING
 		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/user/main_page").permitAll().and().logout()
+				.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
 				.logoutSuccessUrl("/").permitAll();*/
 		
 		//WORKING - TO BE USED FOR FINAL APP
 		/*http.authorizeRequests()
 			.antMatchers("/user/**").authenticated().and().formLogin()
-		.loginPage("/login").defaultSuccessUrl("/user/main_page").permitAll().and().logout()
+		.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
 		.logoutSuccessUrl("/").permitAll();*/
 		
-		//http.csrf().disable();
+		http.authorizeRequests()
+			.antMatchers("/user/**").hasRole("USER")
+			.and()
+			.formLogin().loginPage("/login")
+			.defaultSuccessUrl("/user/main")
+			.permitAll();
+		
+		http.csrf().disable();
 	}
-
+	
 }

@@ -10,9 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class ProgramService implements UserDetailsService {
+public class ProgramService {
 
 	/*private UpperDay ud;
 	private LowerDay ld;*/
@@ -28,6 +27,9 @@ public class ProgramService implements UserDetailsService {
 	
 	@Autowired
 	UserPreferenceRepository userPreferenceRepo;
+	
+	/*@Autowired
+	AuthorityRepository authorityRepo;*/
 	
 	private Random rand = new Random();
 
@@ -206,6 +208,10 @@ public class ProgramService implements UserDetailsService {
 		repo.save(gym);
 	}
 	
+	/*public void saveAuthority(Authority auth) {
+		authorityRepo.save(auth);
+	}*/
+	
 	public void saveUserPreference(UserPreference up) {
 		userPreferenceRepo.save(up);
 	}
@@ -214,14 +220,13 @@ public class ProgramService implements UserDetailsService {
 		return repo.findByEmailAndPassword(email, password);
 	}
 
-	@Override
 	// during registration, email cannot be already in database
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	/*public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Gym gym = repo.findByUsername(email);
 		if (gym == null) {
 			throw new UsernameNotFoundException("Gym not found");
 		}
 
-		return new CustomerGymDetails(gym);
-	}
+		return new MyUserDetails(gym);
+	}*/
 }

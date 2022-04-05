@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
@@ -21,7 +22,7 @@ class JUnitGymApp {
     @Autowired
     private GymRepository repo;
     
-    @Test
+   /* @Test
     public void testCreateUser() {
         Gym gym = new Gym();
         gym.setGymName("Fitness");
@@ -35,7 +36,7 @@ class JUnitGymApp {
          
         assert(gym.getGymEmail()).equals(existGym.getGymEmail());
         
-    }
+    }*/
     
     @Test
     public void testFindGymByUsername() {
