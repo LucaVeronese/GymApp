@@ -1,5 +1,6 @@
 package com.GymApp.GymApp;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 
 @Controller
 public class GymAppController implements ErrorController{
@@ -60,7 +62,7 @@ public class GymAppController implements ErrorController{
 		// Email validation
 		if (existingEmail != null) {
 			model.addObject("alreadyRegisteredMessage",
-					"Oops!  There is already a user registered with the email provided.");
+					"Oops!  You have already registered with this email.");
 			model.setViewName("gym_signup_form");
 			bindingResult.reject("gymEmail");
 			return model;
@@ -87,12 +89,12 @@ public class GymAppController implements ErrorController{
 			//gymRepo.save(gym);
 			
 			// USE THIS ENCODER ON FINAL APP
-			//gym.setGymPassword(encoder.encode(gym.getGymPassword()));
-			//gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
+			gym.setGymPassword(encoder.encode(gym.getGymPassword()));
+			gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
 			
 			// TESTING
-			gym.setGymPassword(gym.getGymPassword());
-			gym.setGymPasswordConfirmed(gym.getGymPassword());
+			//gym.setGymPassword(gym.getGymPassword());
+			//gym.setGymPasswordConfirmed(gym.getGymPassword());
 			//
 			
 			
@@ -161,12 +163,16 @@ public class GymAppController implements ErrorController{
 	}*/
 	
 	@GetMapping("/user/main")
-	public ModelAndView requestNewProgram(ModelAndView model, Gym gym) {
+	public ModelAndView requestNewProgram(ModelAndView model, Gym gym, Principal auth) {
 		//gym = activeGym;
 		//Program program = new Program(gym);
 		
 		/*Program program = new Program();
 		model.addObject("program", program);*/
+		
+		activeGym = programService.findByEmail(auth.getName());
+		
+		model.addObject("name", activeGym.getGymName());
 		model.setViewName("main_user_page");
 		return model;
 	}
@@ -174,6 +180,7 @@ public class GymAppController implements ErrorController{
 	@PostMapping("/user/new_program")
 	public ModelAndView generateNewProgram(ModelAndView model) {
 		//System.out.println(activeGym.toString() + " from post");
+		
 		UserPreference userPreference = new UserPreference();
 		Program program = new Program();
 		
@@ -184,7 +191,9 @@ public class GymAppController implements ErrorController{
 	}
 	
 	@PostMapping("/user/view_program")
-	public ModelAndView test(ModelAndView model, UserPreference userPreference, Program program) {
+	public ModelAndView test(ModelAndView model, UserPreference userPreference, Program program, Principal auth) {
+		//Gym activeGym = programService.findByEmail(auth.getName());
+		
 		userPreference.setGym(activeGym);
 		program.setGym(activeGym);
 

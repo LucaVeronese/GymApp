@@ -11,6 +11,14 @@
 			<div id="title">
 				<h1>OneMore</h1>
 			</div>
+			<nav>
+				<ul>
+				<li><a th:href="@{/}">Home</a>
+					<form class="logout_form" method="post" th:action="@{/logout}">
+							<button class="logout_button" type="submit">Logout</button>
+					</form>
+				</ul>
+			</nav>
 		</div>
 	</header>
 	<section class="main_area">

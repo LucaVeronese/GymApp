@@ -6,17 +6,25 @@
 <link href="/css/styles.css" rel="stylesheet">
 
 </head>
-<header>
-	<div class="container">
-		<div id="title">
-			<h1>OneMore</h1>
-		</div>
-	</div>
-</header>
 <body>
+	<header>
+		<div class="container">
+			<div id="title">
+				<h1>OneMore</h1>
+			</div>
+			<nav>
+				<ul>
+				<li><a th:href="@{/}">Home</a>
+					<form class="logout_form" method="post" th:action="@{/logout}">
+							<button class="logout_button" type="submit">Logout</button>
+					</form>
+				</ul>
+			</nav>
+		</div>
+	</header>
 	<div class="main_area">
 		<div class="container">
-			<h1>Welcome to OneMore, {putName}</h1>
+			<h1>Welcome to OneMore, <label th:text="${name}"></label></h1>
 		</div>
 		<div class="row user_area">
 			<div>

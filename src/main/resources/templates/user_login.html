@@ -17,7 +17,9 @@
 					<li><a th:href="@{/login}" class="current">Login</a>
 					<li><a th:href="@{/register}">Register</a>
 					<li><a th:href="@{/about}">About</a>
-				
+					<form class="logout_form" method="post" th:action="@{/logout}">
+							<button class="logout_button" type="submit">Logout</button>
+					</form>
 				</ul>
 			</nav>
 		</div>
@@ -26,30 +28,33 @@
 		<div class="input_box" id="login_box">
 			<table>
 				<form th:action="@{/login}" method="post">
-				<tr>
-					<td><h2>User Login</h2></td>
-				</tr>
-				<tr>
-					<td><input type="text" class="input" name = "username" placeholder="Email Address"></td>
-				</tr>
-				<tr>
-					<td><input type="password" class="input" name = "password" placeholder="Password"></td>
-				</tr>
-				<tr>
-					<td><button type="submit" class="button">Login</button></td>
-				</tr>
+					<tr>
+						<td><h2>User Login</h2></td>
+					</tr>
+					<tr>
+						<td><input type="text" class="input" name="username"
+							placeholder="Email Address"></td>
+					</tr>
+					<tr>
+						<td><input type="password" class="input" name="password"
+							placeholder="Password"></td>
+					</tr>
+					<tr>
+						<td><button type="submit" class="button">Login</button></td>
+					</tr>
 				</form>
 			</table>
 			<!--  <div th:if="${errorMessage}" role="alert"
 							th:text="${errorMessage}"></div> -->
 			<div th:if="${param.error}">Invalid email address or password</div>
-			
+			<div th:if="${param.logout}">You have successfully logged out</div>
+
 		</div>
 	</section>
 	<div>
-							
 
-<!--  	<form th:action="@{/login}" method="post" th:object=${authGym}>
+
+		<!--  	<form th:action="@{/login}" method="post" th:object=${authGym}>
 			Email : <input type="text" th:field="*{gymEmail}"
 									class="form-control"> Password : <input type="text"
 									th:field="*{gymPassword}" class="form-control"><br>
@@ -61,8 +66,8 @@
 	<div th:if="${errorMessage}" class="alert alert-danger" role="alert"
 							th:text="${errorMessage}"></div>		-->
 
-	<footer>
-		<p>Gym App - Copyright &copy; LucaV 2022</p>
-	</footer>
+		<footer>
+			<p>Gym App - Copyright &copy; LucaV 2022</p>
+		</footer>
 </body>
 </html>
