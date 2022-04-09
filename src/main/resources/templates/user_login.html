@@ -17,15 +17,13 @@
 					<li><a th:href="@{/login}" class="current">Login</a>
 					<li><a th:href="@{/register}">Register</a>
 					<li><a th:href="@{/about}">About</a>
-					<form class="logout_form" method="post" th:action="@{/logout}">
-							<button class="logout_button" type="submit">Logout</button>
-					</form>
+					<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
-	<section class="registration_area">
-		<div class="input_box" id="login_box">
+	<section class="main_area row">
+		<div class="input_box column" id="login_box">
 			<table>
 				<form th:action="@{/login}" method="post">
 					<tr>

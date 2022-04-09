@@ -33,14 +33,14 @@ body {
 }
 
 .button:hover {
-  background-color: #4CAF50; /* Green */
+	background-color: #4CAF50; /* Green */
 }
 
 .input_box {
 	max-width: 350px;
 	min-width: 70px;
-	padding-left:30px;
-	padding-right:30px;
+	padding-left: 30px;
+	padding-right: 30px;
 	background-color: #35424a;
 	border-radius: 15px;
 	padding-bottom: 20px;
@@ -54,7 +54,6 @@ body {
 header {
 	background-color: #35424a;
 	color: #ffffff;
-	padding-top: 20px;
 	min-height: 70px;
 	border-bottom: #FF3333 3px solid;
 }
@@ -74,8 +73,7 @@ header ul {
 header li {
 	float: left;
 	display: inline;
-	padding-right: 20px;
-	padding-left: 20px;
+	padding-right: 40px;
 }
 
 #title {
@@ -91,27 +89,34 @@ header a:hover {
 	color: #FF3333;
 }
 
-.logout_form {
-	float:right;
-	margin-left: 50px;
+.logout {
+	background-color: #f44336;
+	color: white;
+	padding: 14px 25px;
+	text-decoration: none;
 }
 
-.logout_button {
+.logout:hover {
+	color: white;
+	background-color: red;
+}
+
+/*.logout_form {
+	float:right;
+	margin-left: 50px;
+}*/
+
+/*.logout_button {
 	color: white;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 16px;
 	background: red;
-
-}
-
-.logout_button:hover{
-	background:green;
-}
+}*/
 
 /*Main Area*/
 .main_area {
-	min-height: 460px;
+	min-height: 480px;
 	background: url('/img/background.jpg') no-repeat 0 -400px;
 	text-align: center;
 	color: #ffffff;
@@ -125,22 +130,21 @@ header a:hover {
 
 .main_area h2 {
 	margin-top: 0px;
-	padding-top:20px;
-	text-align:center;
-	
+	padding-top: 20px;
+	text-align: center;
 }
 
 .main_area p {
 	font-size: 15px;
 }
 
-.main_area a{
+.main_area a {
 	color: white;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 16px;
 	padding-left: 60px;
-	padding-right:60px;
+	padding-right: 60px;
 }
 
 /* Footer */
@@ -151,73 +155,57 @@ footer {
 	text-align: center;
 }
 
-/* Registration Form */
-.registration_area {
-	color: #ffffff;
-	margin: auto;
-	overflow: hidden;
-	padding-bottom: 20px;
-	padding-top: 20px;
-	background: url('/img/background.jpg') no-repeat 0 -400px;
-	min-height: 420px;
-	display:flex;
-	justify-content:center;
-	align-items: flex-start;
-}
-
-.registration_area h2{
-	text-align:center;	
-}
-
 /* About */
 .row {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-evenly;
 }
 
-.column{
+.column {
 	text-align: center;
+	align-self: center;
 }
 
 /* User Area */
-.user_area{
-	margin-left:20%;
-	margin-right:20%;
-}
+/*.user_area {
+	margin-left: 20%;
+	margin-right: 20%;
+}*/
 
 /* User Preferences */
-.input_box select{
-	width:130px;
+.input_box select {
+	width: 130px;
 	border: black 2px solid;
 	transition-duration: 0.4s;
 }
 
-.input_box select:hover{
-	background:#FF3333;
+.input_box select:hover {
+	background: #FF3333;
 }
 
 /* Program */
-#daily_program{
+#daily_program {
 	text-align: center;
 }
-#program, #program th, #program td{
+
+#program, #program th, #program td {
 	border-bottom: 1px solid #ddd;
 }
 
-#program{
+#program {
 	border-collapse: collapse;
-	width:100%;
-	margin-bottom:3%;
+	width: 100%;
+	margin-bottom: 3%;
 	background: red;
 }
 
-#program th{
+#program th {
 	text-align: left;
 	height: 40px;
-	background-color: #ffd9d9;	
+	background-color: #ffd9d9;
 }
 
-#program td{
+#program td {
 	text-align: left;
 }
 
@@ -225,6 +213,58 @@ footer {
 	background-color: #ffd9d9;
 }
 
-.data, .title{
+.data, .title {
 	padding-left: 40px;
+}
+
+/* Media Queries */
+@media ( max-width : 850px) {
+	#title, header nav, header nav li {
+		float: none;
+		text-align: center;
+		width: 100%;
+	}
+	header {
+		padding-bottom: 5px;
+	}
+	header nav {
+		margin-top: 5px;
+	}
+	header a {
+		font-size: 14px;
+	}
+	.logout {
+		padding: 10px 22px;
+		display: inline-block;
+	}
+	.row {
+		flex-direction: column;
+		align-items: center;
+	}
+	.column {
+		margin-bottom: 20px;
+	}
+	.main_area h1 {
+		font-size: 50px;
+		margin-top: 70px;
+		margin-bottom: 10px;
+	}
+}
+
+@media ( max-width : 680px) {
+	main_area h1 {
+		margin: 0px;
+	}
+	header li {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+	header a {
+		font-size: 12px;
+	}
+	.main_area h1 {
+		font-size: 45px;
+		margin-top: 50px;
+		margin-bottom: 10px;
+	}
 }

@@ -24,16 +24,14 @@
 					<li><a th:href="@{/login}">Login</a>
 					<li><a th:href="@{/register}" class="current">Register</a>
 					<li><a th:href="@{/about}">About</a>
-					<form class="logout_form" form-method="post" th:action="@{/logout}">
-							<button class="logout_button" type="submit">Logout</button>
-					</form>
+					<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 	<div>
-		<div class="registration_area">
-			<div class="input_box">
+		<div class="main_area row">
+			<div class="input_box column">
 				<h2>Register New Account</h2>
 
 				<!-- <div>

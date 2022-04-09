@@ -23,9 +23,7 @@
 					<li><a th:href="@{/login}">Login</a>
 					<li><a th:href="@{/register}">Register</a>
 					<li><a th:href="@{/about}" class="current">About</a>
-					<form class="logout_form" form-method="post" th:action="@{/logout}">
-							<button class="logout_button" type="submit">Logout</button>
-					</form>
+					<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -38,7 +36,7 @@
 					<img src="/w3images/team1.jpg" alt="LV" style="width: 100%">
 					<div>
 						<h2>Luca Veronese</h2>
-						<p class="title">Developer And Designer</p>
+						<p>Developer And Designer</p>
 						<p>Some text that describes me lorem ipsum ipsum lorem.</p>
 						<p>lucav@example.com</p>
 						<p>
@@ -53,7 +51,7 @@
 					<img src="/w3images/team2.jpg" alt="GA" style="width: 100%">
 					<div>
 						<h2>Germana Alencar</h2>
-						<p class="title">PT And Motivator</p>
+						<p>PT And Motivator</p>
 						<p>Some text that describes me lorem ipsum ipsum lorem.</p>
 						<p>germanaa@example.com</p>
 						<p>

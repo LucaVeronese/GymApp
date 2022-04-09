@@ -14,16 +14,14 @@
 			<nav>
 				<ul>
 				<li><a th:href="@{/}">Home</a>
-					<form class="logout_form" method="post" th:action="@{/logout}">
-							<button class="logout_button" type="submit">Logout</button>
-					</form>
+				<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 	<div>
-		<section class="registration_area">
-			<div class="input_box">
+		<section class="row main_area">
+			<div class="column input_box">
 				<table>
 					<form th:action="@{/user/view_program}"
 						th:object="${userPreference}" method="post">
