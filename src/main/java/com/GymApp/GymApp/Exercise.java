@@ -60,6 +60,15 @@ public class Exercise {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+
+	public String getFocus() {
+		return focus;
+	}
+
+	public void setFocus(String focus) {
+		this.focus = focus;
+	}
 
 	@Override
 	public String toString() {

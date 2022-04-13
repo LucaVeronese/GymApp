@@ -56,13 +56,14 @@ header {
 	color: #ffffff;
 	min-height: 70px;
 	border-bottom: #FF3333 3px solid;
+	padding-bottom:5px;
 }
 
 header a {
 	color: white;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 header ul {
@@ -71,18 +72,24 @@ header ul {
 }
 
 header li {
-	float: left;
+	/*float: left;*/
 	display: inline;
 	padding-right: 40px;
 }
 
 #title {
-	float: left;
+	/*float: left;*/
+	
+	text-align: center;
+	width: 100%;
 }
 
 header nav {
-	float: right;
-	margin-top: 35px;
+	/*float: right;
+	margin-top: 35px;*/
+	float: none;
+	text-align: center;
+	width: 100%;
 }
 
 header a:hover {
@@ -92,8 +99,9 @@ header a:hover {
 .logout {
 	background-color: #f44336;
 	color: white;
-	padding: 14px 25px;
+	padding: 5px 20px;
 	text-decoration: none;
+	display: inline-block;
 }
 
 .logout:hover {
@@ -116,7 +124,7 @@ header a:hover {
 
 /*Main Area*/
 .main_area {
-	min-height: 480px;
+	min-height: 460px;
 	background: url('/img/background.jpg') no-repeat 0 -400px;
 	text-align: center;
 	color: #ffffff;
@@ -219,23 +227,11 @@ footer {
 
 /* Media Queries */
 @media ( max-width : 850px) {
-	#title, header nav, header nav li {
-		float: none;
-		text-align: center;
-		width: 100%;
-	}
-	header {
-		padding-bottom: 5px;
-	}
 	header nav {
 		margin-top: 5px;
 	}
 	header a {
 		font-size: 14px;
-	}
-	.logout {
-		padding: 10px 22px;
-		display: inline-block;
 	}
 	.row {
 		flex-direction: column;

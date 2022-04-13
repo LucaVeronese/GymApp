@@ -15,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -120,6 +122,13 @@ public class GymAppController implements ErrorController{
 		return model;
 	}
 	
+	
+	@GetMapping("/about")
+	public ModelAndView about(ModelAndView model) {
+		model.setViewName("about");
+		return model;
+	}
+	
 	/*@GetMapping("/login_page")
 	public ModelAndView login(ModelAndView model) {
 		model.setViewName("user_login");
@@ -191,7 +200,7 @@ public class GymAppController implements ErrorController{
 	}
 	
 	@PostMapping("/user/view_program")
-	public ModelAndView test(ModelAndView model, UserPreference userPreference, Program program, Principal auth) {
+	public ModelAndView viewProgram(ModelAndView model, UserPreference userPreference, Program program, Principal auth) {
 		//Gym activeGym = programService.findByEmail(auth.getName());
 		
 		userPreference.setGym(activeGym);
@@ -217,15 +226,34 @@ public class GymAppController implements ErrorController{
 	
 	@GetMapping("/user/history")
 	public ModelAndView history(ModelAndView model) {
-		List<Program> list = programService.history(activeGym);
+		List<UserPreference> userPreferenceList = programService.getUserPreferences(activeGym);
+		System.out.println("User Preference list is " + userPreferenceList.toString());
+		System.out.println("User Preference list size is " + userPreferenceList.size());
+		
 		model.setViewName("history");
-		model.addObject("numberOfPrograms", list.size());
+		//model.addObject("numberOfPrograms", userPreferenceList.size());
+		model.addObject("selectedList", new UserPreference());
+		model.addObject("list", userPreferenceList);
 		return model;
 	}
-	
-	@GetMapping("/about")
-	public ModelAndView about(ModelAndView model) {
-		model.setViewName("about");
+
+	@PostMapping("/user/view_history")
+	public ModelAndView viewHistory(UserPreference userPreference, ModelAndView model) {
+		
+		System.out.println(userPreference.toString());
+		
+		List<List<Exercise>> fullProgram = programService.getExercises(userPreference.getFocus(), userPreference.getFitnessLevel(), userPreference.getDaysPerWeek(), userPreference.getGoal());
+		String rep = programService.getReps(userPreference.getGoal());
+		String set = programService.getSets(userPreference.getGoal());
+		
+		model.addObject("fullProgram", fullProgram);
+		model.addObject("rep", rep);
+		model.addObject("set", set);
+		
+		System.out.println("Size of fullProgram is " + fullProgram.size());
+		System.out.println("fullProgram is " + fullProgram.toString());
+		
+		model.setViewName("new_program");
 		return model;
 	}
 	

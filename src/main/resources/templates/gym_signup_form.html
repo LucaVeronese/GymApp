@@ -94,16 +94,17 @@
 		 -->
 
 				<table>
-					<form th:action="@{/register}" method="post"
-						th:object="${gym}">
+					<form th:action="@{/register}" method="post" th:object="${gym}">
 						<tr>
-							<td><input type="text" th:field="*{gymName}" class="input" placeholder="Full Name"></td>
+							<td><input type="text" th:field="*{gymName}" class="input"
+								placeholder="Full Name"></td>
 						</tr>
 						<tr>
 							<td class="error" th:errors="*{gymName}"></td>
 						</tr>
 						<tr>
-							<td><input th:field="*{gymEmail}" class="input" placeholder="Email Address"></td>
+							<td><input th:field="*{gymEmail}" class="input"
+								placeholder="Email Address"></td>
 						</tr>
 						<tr>
 							<td th:if="${#fields.hasErrors('gymEmail')}"></td>
@@ -112,7 +113,8 @@
 							<td th:if="${invalidEmail}" th:text="${invalidEmail}"></td>
 						</tr>
 						<tr>
-							<td><input type="text" th:field="*{gymUsername}" class="input" placeholder="Username"></td>
+							<td><input type="text" th:field="*{gymUsername}"
+								class="input" placeholder="Username"></td>
 						</tr>
 						<tr>
 							<td th:if="${#fields.hasErrors('gymUsername')}"
@@ -130,8 +132,9 @@
 							</td>
 						</tr>
 						<tr>
-							<td><input type="password" th:field="*{gymPasswordConfirmed}"
-								class="input" placeholder="Confirm Password"></td>
+							<td><input type="password"
+								th:field="*{gymPasswordConfirmed}" class="input"
+								placeholder="Confirm Password"></td>
 						</tr>
 						<tr>
 							<td th:if="${invalidConfirmedPassword}"
@@ -144,8 +147,7 @@
 						</tr>
 					</form>
 				</table>
-				<div th:if="${alreadyRegisteredMessage}"
-					c+-lass="alert alert-danger" role="alert"
+				<div th:if="${alreadyRegisteredMessage}" role="alert"
 					th:text="${alreadyRegisteredMessage}"></div>
 
 			</div>

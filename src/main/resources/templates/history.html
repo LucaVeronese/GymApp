@@ -16,16 +16,68 @@
 			<nav>
 				<ul>
 				<li><a th:href="@{/}">Home</a>
-					<form class="logout_form" method="post" th:action="@{/logout}">
-							<button class="logout_button" type="submit">Logout</button>
-					</form>
+				<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 	<section class="main_area">
 		<div class="container">
-			<h1>Your History has <span th:text="${numberOfPrograms}"></span></h1>
+			<h1>
+				Your History has <span th:text="${numberOfPrograms}"></span>
+			</h1>
+		</div>
+		<div class="row">
+			<div th:each="userPreference: ${list}" class="input_box column">
+				<form th:action="@{/user/view_history}" method="post"
+					th:object="${userPreference}">
+					<table>
+
+						<thead>
+							<tr>
+								<th colspan="2">Option Selected</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>Fitness Level:</td>
+								<!--<td><input type="hidden"
+									th:text="${userPreference.fitnessLevel}"
+									th:field="*{userPreference.fitnessLevel}"><span
+									th:text="${userPreference.fitnessLevel}"></span></input></td>
+								 <td><input type="hidden" th:with="selectedList.fitnessLevel=${userPreference.fitnessLevel}"
+									placeholder="Full Name"></td>	 -->
+								<td><input type="hidden"
+									th:value="${userPreference.fitnessLevel}" name="fitnessLevel"><span
+									th:text="${userPreference.fitnessLevel}"></span></td>
+							</tr>
+							<tr>
+								<td>Days per Week:</td>
+								<td><input type="hidden"
+									th:value="${userPreference.daysPerWeek}" name="daysPerWeek"><span
+									th:text="${userPreference.daysPerWeek}"></span></td>
+							</tr>
+							<tr>
+								<td>Goal:</td>
+								<td><input type="hidden"
+									th:value="${userPreference.goal}" name="goal"><span
+									th:text="${userPreference.goal}"></span></td>
+							</tr>
+							<tr>
+								<td>Focus:</td>
+								<td><input type="hidden"
+									th:value="${userPreference.focus}" name="focus"><span
+									th:text="${userPreference.focus}"></span></td>
+							</tr>
+							<tr>
+								<td><button type="submit">View Program</button></td>
+							</tr>
+						</tbody>
+
+					</table>
+				</form>
+			</div>
 		</div>
 	</section>
 	<footer>
