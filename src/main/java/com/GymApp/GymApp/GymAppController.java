@@ -231,7 +231,7 @@ public class GymAppController implements ErrorController{
 		System.out.println("User Preference list size is " + userPreferenceList.size());
 		
 		model.setViewName("history");
-		//model.addObject("numberOfPrograms", userPreferenceList.size());
+		model.addObject("numberOfPrograms", userPreferenceList.size());
 		model.addObject("selectedList", new UserPreference());
 		model.addObject("list", userPreferenceList);
 		return model;
