@@ -59,15 +59,6 @@ class JUnitGymApp {
 	}
 
 	@Test
-	public void testFindByUsername() {
-		String username = "Username";
-
-		Optional<Gym> gym = repo.findByUsername(username);
-
-		assertNotNull(gym);
-	}
-
-	@Test
 	public void testFindGymByEmail() {
 		String email = "gym@email.com";
 
@@ -80,11 +71,11 @@ class JUnitGymApp {
 	public void testFindByComplexityAndTypeAndFocus() {
 		String complexity = "Beginner";
 		String type = "Compound";
-		String focus = "Upper";
+		String focus = "Chest";
 
-		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, focus);
+		Exercise exercise = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, focus);
 
-		assertNotNull(list);
+		assertNotNull(exercise);
 	}
 
 	@Test

@@ -83,20 +83,16 @@ header ul {
 }
 
 header li {
-	/*float: left;*/
 	display: inline;
 	padding-right: 40px;
 }
 
 #title {
-	/*float: left;*/
 	text-align: center;
 	width: 100%;
 }
 
 header nav {
-	/*float: right;
-	margin-top: 35px;*/
 	float: none;
 	text-align: center;
 	width: 100%;
@@ -118,19 +114,6 @@ header a:hover {
 	color: white;
 	background-color: red;
 }
-
-/*.logout_form {
-	float:right;
-	margin-left: 50px;
-}*/
-
-/*.logout_button {
-	color: white;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-size: 16px;
-	background: red;
-}*/
 
 /*Main Area*/
 .main_area {
@@ -175,11 +158,9 @@ footer {
 
 /* About */
 
-/* User Area */
-/*.user_area {
-	margin-left: 20%;
-	margin-right: 20%;
-}*/
+.card {
+	padding-top: 20px;
+}
 
 /* User Preferences */
 .input_box select {
@@ -282,20 +263,3 @@ footer {
 		margin-bottom: 10px;
 	}
 }
-
-/*@media ( max-width : 740px) {
-	main_area h1 {
-		margin: 0px;
-	}
-	header li {
-		padding-right: 10px;
-		padding-left: 10px;
-	}
-	header a {
-		font-size: 12px;
-	}
-	.main_area h1 {
-		font-size: 45px;
-		margin-top: 50px;
-		margin-bottom: 10px;
-	}*/

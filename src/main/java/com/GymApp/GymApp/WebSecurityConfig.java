@@ -67,6 +67,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+	
+		http.authorizeRequests()
+			.antMatchers("/user/**").hasRole("USER")
+			.and()
+			.formLogin().loginPage("/login")
+			.defaultSuccessUrl("/user/main")
+			.permitAll()
+			.and()
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+		
+		http.csrf().disable();
+		
 		//USING THIS FOR TESTING
 		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
@@ -78,16 +90,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
 		.logoutSuccessUrl("/").permitAll();*/
 		
-		http.authorizeRequests()
-			.antMatchers("/user/**").hasRole("USER")
-			.and()
-			.formLogin().loginPage("/login")
-			.defaultSuccessUrl("/user/main")
-			.permitAll()
-			.and()
-			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-		
-		http.csrf().disable();
 	}
 	
 }

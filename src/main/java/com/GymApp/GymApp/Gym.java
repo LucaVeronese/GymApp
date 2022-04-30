@@ -24,11 +24,6 @@ import org.springframework.boot.context.properties.bind.Name;
 @Table(name = "Gym")
 public class Gym { 
 	
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "gym_id")
-	private long gymId;*/
-	
 	@NotBlank
 	@Column(name = "gym_name")
 	private String gymName;
@@ -56,20 +51,11 @@ public class Gym {
 	@Column(name = "role")
 	private String role;
 
-	//@ColumnDefault(value = "USER")
-	/*@Column(columnDefinition = "varchar(255) default USER")
-	private String enabled;*/
-	
-	//@OneToMany(targetEntity = Program.class, cascade = CascadeType.ALL, orphanRemoval = true)
-	//@JoinColumn(name = "gp_fk", referencedColumnName = "gymId")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
 	private List<Program> programs;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
 	private List<UserPreference> userPreferences;
-	
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym")
-	private List<Authority> authorities;*/
 	
 	//needs to create a Password and Username field - update database and gym_signup_form
 	public Gym() {}
@@ -98,14 +84,6 @@ public class Gym {
 		this.gymPassword = gym.getGymPassword();
 		this.gymPasswordConfirmed = gym.getGymPasswordConfirmed();
 	}
-
-	/*public long getGymId() {
-		return gymId;
-	}
-
-	public void setGymId(long gymId) {
-		this.gymId = gymId;
-	}*/
 
 	public String getGymName() {
 		return gymName;
@@ -136,9 +114,6 @@ public class Gym {
 	}
 
 	public void setGymPassword(String Password) {
-		/*BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String encodedPassword = encoder.encode(Password);
-		gymPassword = encodedPassword;*/
 		this.gymPassword = Password;
 	}
 
@@ -182,10 +157,10 @@ public class Gym {
 		this.userPreferences = userPreferences;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
-		return "Gym [gymId=" + gymId + ", gymName=" + gymName + ", gymEmail=" + gymEmail + ", gymUsername="
-				+ gymUsername + ", gymPassword=" + gymPassword + "]";
-	}*/
-   	
+		return "Gym [gymName=" + gymName + ", gymEmail=" + gymEmail + ", gymUsername=" + gymUsername + ", gymPassword="
+				+ gymPassword + ", gymPasswordConfirmed=" + gymPasswordConfirmed + ", enabled=" + enabled + ", role="
+				+ role + ", programs=" + programs + ", userPreferences=" + userPreferences + "]";
+	}
 }

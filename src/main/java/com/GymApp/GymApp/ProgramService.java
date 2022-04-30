@@ -2,19 +2,12 @@ package com.GymApp.GymApp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProgramService {
-
-	/*private UpperDay ud; private LowerDay ld;
-	 */
 
 	@Autowired
 	ProgramRepository programRepo;
@@ -27,12 +20,6 @@ public class ProgramService {
 
 	@Autowired
 	UserPreferenceRepository userPreferenceRepo;
-
-	/*
-	 * @Autowired AuthorityRepository authorityRepo;
-	 */
-
-	private Random rand = new Random();
 
 	public void save(Program program) {
 		programRepo.save(program);
@@ -48,59 +35,47 @@ public class ProgramService {
 
 		List<List<Exercise>> program = new ArrayList<List<Exercise>>();
 		return program = setProgram(program, focus, complexity, type, days, goal);
-		// return retrieveExercise(prog, complexity, type);
 	}
 
 	public List<List<Exercise>> setProgram(List<List<Exercise>> program, String focus, String complexity, String type,
 			int days, String goal) {
 
 		if (focus.equalsIgnoreCase("upper")) {
-			program.add(getUpperDay(complexity, type));
-			/*
-			 * if (goal.equalsIgnoreCase("Lose")) { program.add(getCardioDay()); }
-			 */
-		} else
-			// program.add(getLowerDay(complexity, type));
+			program.add(getUpperDay(complexity, type, goal));
+		}
+		else
+			program.add(getLowerDay(complexity, type));
 
-			// program.add(getLowerDay(complexity, type));
-			program.add(getUpperDay(complexity, type));
-
-		// TEST
-		program.add(getUpperDay(complexity, type));
-		program.add(getUpperDay(complexity, type));
-		// END TEST
+		program.add(getLowerDay(complexity, type));
+		program.add(getUpperDay(complexity, type, goal));
 
 		if (days == 4) {
 			// We can set the splitDay as a "Compound" day
-			// program.add(getSplitDay(complexity, "Compound"));
-			/*
-			 * if (goal.equalsIgnoreCase("Lose")) { program.add(getCardioDay()); }
-			 */
+			program.add(getSplitDay(complexity, "Compound"));
 		}
+		
 		if (days == 5) {
-			// program.add(getLowerDay(complexity, type));
-			program.add(getUpperDay(complexity, type));
-			/*
-			 * if (goal.equalsIgnoreCase("Lose")) { program.add(getCardioDay()); }
-			 */
+			program.add(getLowerDay(complexity, type));
+			program.add(getUpperDay(complexity, type, goal));
 		}
 
 		return program;
 	}
 
-	public List<Exercise> getUpperDay(String complexity, String type) {
+	public List<Exercise> getUpperDay(String complexity, String type, String goal) {
 		List<Exercise> day = new ArrayList<Exercise>();
 		day.add(getExercise(complexity, type, "Chest"));
-		// day.add(getExercise(complexity, type, "Tricep"));
+		day.add(getExercise(complexity, type, "Tricep"));
 
-		// per definition, there are no Compound bicep exercise. All bicep ex are of
-		// type Isolated
+		// per definition, there are no Compound bicep exercises. All bicep ex are of type Isolated
 		day.add(getExercise(complexity, "Isolated", "Bicep"));
-		/*
-		 * day.add(getExercise(complexity, type, "Back"));
-		 * day.add(getExercise(complexity, type, "Shoulder"));
-		 * day.add(getExercise(complexity, type, "Core"));
-		 */
+		day.add(getExercise(complexity, type, "Back"));
+		day.add(getExercise(complexity, type, "Shoulder"));
+		day.add(getExercise(complexity, type, "Core"));
+
+		if (goal.equalsIgnoreCase("Lose")) {
+			day.add(getExercise(complexity, "Compound", "Cardio"));
+		}
 
 		return day;
 	}
@@ -112,7 +87,7 @@ public class ProgramService {
 			day.add(getExercise(complexity, type, "Hamstring"));
 			day.add(getExercise(complexity, type, "Glut"));
 		}
-		day.add(getExercise(complexity, type, "Calf"));
+		day.add(getExercise(complexity, "Isolated", "Calf"));
 
 		return day;
 	}
@@ -121,31 +96,20 @@ public class ProgramService {
 		List<Exercise> day = new ArrayList<Exercise>();
 
 		day.add(getExercise(complexity, type, "Chest"));
-		// day.add(getExercise(complexity, type, "Tricep"));
+		day.add(getExercise(complexity, type, "Tricep"));
 		day.add(getExercise(complexity, "Isolated", "Bicep"));
-		/*
-		 * day.add(getExercise(complexity, type, "Back"));
-		 * day.add(getExercise(complexity, type, "Shoulder"));
-		 * day.add(getExercise(complexity, type, "Quad"));
-		 * day.add(getExercise(complexity, type, "Hamstring"));
-		 * day.add(getExercise(complexity, type, "Glut"));
-		 */
+		day.add(getExercise(complexity, type, "Back"));
+		day.add(getExercise(complexity, type, "Shoulder"));
+		day.add(getExercise(complexity, type, "Quad"));
+		day.add(getExercise(complexity, type, "Hamstring"));
+		day.add(getExercise(complexity, type, "Glut"));
 
 		return day;
 	}
 
-	public List<Exercise> getCardioDay() {
-		// TO DO
-		return null;
-	}
-
 	public Exercise getExercise(String complexity, String type, String focus) {
-		List<Exercise> list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, focus);
-		if (list.size() >= 1) {
-			Exercise exercise = list.get(rand.nextInt(list.size()));
-			return exercise;
-		} else
-			return null;
+		Exercise exercise = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, focus);
+		return exercise;
 	}
 
 	public String getReps(String goal) {
@@ -170,36 +134,12 @@ public class ProgramService {
 		return list;
 	}
 
-	public List<UserPreference> getUserPreferences(Gym gym){
+	public List<UserPreference> getUserPreferences(Gym gym) {
 		List<UserPreference> day = new ArrayList<UserPreference>();
 
 		day.addAll(userPreferenceRepo.findByGym(gym));
 		return day;
 	}
-
-	/*
-	 * public Exercise bicepExercise(String complexity) { List<Exercise> list =
-	 * exerciseRepo.findByComplexityAndFocus(complexity, "Bicep"); if(list.size() >=
-	 * 1) { Exercise exercise = list.get(rand.nextInt(list.size())); return
-	 * exercise; } else return null; }
-	 * 
-	 * public Exercise tricepExercise(String complexity, String type) {
-	 * List<Exercise> list =
-	 * exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, "Tricep");
-	 * if(list.size() >= 1) { Exercise exercise =
-	 * list.get(rand.nextInt(list.size())); return exercise; } else return null; }
-	 * 
-	 * public Exercise backExercise(String complexity, String type) { List<Exercise>
-	 * list = exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type,
-	 * "Back"); if(list.size() >= 1) { Exercise exercise =
-	 * list.get(rand.nextInt(list.size())); return exercise; } else return null; }
-	 * 
-	 * public Exercise shoulderExercise(String complexity, String type) {
-	 * List<Exercise> list =
-	 * exerciseRepo.findByComplexityAndTypeAndFocus(complexity, type, "Back");
-	 * if(list.size() >= 1) { Exercise exercise =
-	 * list.get(rand.nextInt(list.size())); return exercise; } else return null; }
-	 */
 
 	public Gym findByEmail(String email) {
 		return repo.findByEmail(email);
@@ -209,10 +149,6 @@ public class ProgramService {
 		repo.save(gym);
 	}
 
-	/*
-	 * public void saveAuthority(Authority auth) { authorityRepo.save(auth); }
-	 */
-
 	public void saveUserPreference(UserPreference up) {
 		userPreferenceRepo.save(up);
 	}
@@ -220,13 +156,4 @@ public class ProgramService {
 	public Gym login(String email, String password) {
 		return repo.findByEmailAndPassword(email, password);
 	}
-
-	// during registration, email cannot be already in database
-	/*
-	 * public UserDetails loadUserByUsername(String email) throws
-	 * UsernameNotFoundException { Gym gym = repo.findByUsername(email); if (gym ==
-	 * null) { throw new UsernameNotFoundException("Gym not found"); }
-	 * 
-	 * return new MyUserDetails(gym); }
-	 */
 }
