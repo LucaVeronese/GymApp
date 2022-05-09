@@ -64,6 +64,8 @@ public class ProgramService {
 
 	public List<Exercise> getUpperDay(String complexity, String type, String goal) {
 		List<Exercise> day = new ArrayList<Exercise>();
+		// per definition, an UpperDay is set to have exercises targeting the below muscles
+		
 		day.add(getExercise(complexity, type, "Chest"));
 		day.add(getExercise(complexity, type, "Tricep"));
 
@@ -74,6 +76,7 @@ public class ProgramService {
 		day.add(getExercise(complexity, type, "Core"));
 
 		if (goal.equalsIgnoreCase("Lose")) {
+			// All cardio exercises are compound
 			day.add(getExercise(complexity, "Compound", "Cardio"));
 		}
 

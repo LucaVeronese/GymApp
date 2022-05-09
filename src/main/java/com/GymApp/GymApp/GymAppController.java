@@ -75,6 +75,7 @@ public class GymAppController implements ErrorController{
 			gym.setGymPassword(encoder.encode(gym.getGymPassword()));
 			gym.setGymPasswordConfirmed(encoder.encode(gym.getGymPassword()));
 
+			// set variable values needed for Spring Security authentication
 			gym.setEnabled(true);
 			gym.setRole("ROLE_USER");
 	
@@ -120,7 +121,7 @@ public class GymAppController implements ErrorController{
 	}
 	
 	@PostMapping("/user/view_program")
-	public ModelAndView viewProgram(ModelAndView model, UserPreference userPreference, Program program, Principal auth) {
+	public ModelAndView viewProgram(ModelAndView model, UserPreference userPreference, Program program) {
 		
 		userPreference.setGym(activeGym);
 		program.setGym(activeGym);
@@ -135,10 +136,7 @@ public class GymAppController implements ErrorController{
 		model.addObject("fullProgram", fullProgram);
 		model.addObject("rep", rep);
 		model.addObject("set", set);
-		
-		System.out.println("Size of fullProgram is " + fullProgram.size());
-		System.out.println("fullProgram is " + fullProgram.toString());
-		
+
 		model.setViewName("new_program");
 		return model;
 	}
@@ -146,10 +144,6 @@ public class GymAppController implements ErrorController{
 	@GetMapping("/user/history")
 	public ModelAndView history(ModelAndView model) {
 		List<UserPreference> userPreferenceList = programService.getUserPreferences(activeGym);
-		
-		// Println() for testing
-		System.out.println("User Preference list is " + userPreferenceList.toString());
-		System.out.println("User Preference list size is " + userPreferenceList.size());
 		
 		model.setViewName("history");
 		model.addObject("numberOfPrograms", userPreferenceList.size());
