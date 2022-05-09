@@ -16,7 +16,6 @@ public class MyUserDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String gymEmail) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		Optional<Gym> gym = repo.findByUsername(gymEmail);
 		gym.orElseThrow(()-> new UsernameNotFoundException("Username not found"));
 		return gym.map(MyUserDetails::new).get();

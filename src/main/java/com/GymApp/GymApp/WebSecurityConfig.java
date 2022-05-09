@@ -20,9 +20,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	private DataSource dataSource;
 	
 	@Autowired
 	ProgramService service;
@@ -30,39 +27,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService userDetailsService;
 
-
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	/*public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}*/
-
-	/*@Bean
-	public CustomGymDetailsService gymService() {
-		return new CustomGymDetailsService();
-	}*/
-
-	/*@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setPasswordEncoder(passwordEncoder());
-		authProvider.setUserDetailsService(userDetailsService());
-
-		return authProvider;
-	}*/
 
 	//@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//auth.authenticationProvider(authenticationProvider());
-		
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {		
 		auth.userDetailsService(userDetailsService);
-		
-		/*auth.jdbcAuthentication()
-			.dataSource(dataSource)
-			.usersByUsernameQuery("select gym_email, gym_password, enabled from gym where gym_email = ? ")
-			.authoritiesByUsernameQuery("select gym_email, authority from authorities where gym_email = ? ");*/
 	}
 
 	@Override
@@ -78,18 +50,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 		
 		http.csrf().disable();
-		
-		//USING THIS FOR TESTING
-		/*http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
-				.logoutSuccessUrl("/").permitAll();*/
-		
-		//WORKING - TO BE USED FOR FINAL APP
-		/*http.authorizeRequests()
-			.antMatchers("/user/**").authenticated().and().formLogin()
-		.loginPage("/login").defaultSuccessUrl("/user/main").permitAll().and().logout()
-		.logoutSuccessUrl("/").permitAll();*/
-		
 	}
-	
 }

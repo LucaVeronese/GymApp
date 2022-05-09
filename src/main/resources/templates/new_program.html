@@ -13,9 +13,9 @@
 			</div>
 			<nav>
 				<ul>
-				<li><a th:href="@{/}">Home</a>
-				<li><a th:href="@{/user/main}" class="logout">User Page</a>
-				<li><a th:href="@{/logout}" class="logout">Logout</a></li>
+					<li><a th:href="@{/}">Home</a>
+					<li><a th:href="@{/user/main}" class="logout">User Page</a>
+					<li><a th:href="@{/logout}" class="logout">Logout</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -23,29 +23,31 @@
 	<section class="main_area">
 		<div class="container">
 			<div>
-				<h1 style="margin:0px;">Your Weekly Program</h1>
+				<h1 style="margin: 0px;">Your Weekly Program</h1>
 			</div>
-			<table id="program">
-				<thead>
-					<tr>
-						<th class="title">Name</th>
-						<th class="title">Complexity</th>
-						<th class="title">Sets</th>
-						<th class="title">Repetitions</th>
-					</tr>
-				</thead>
-				<tbody th:each="dailyProgram: ${fullProgram}">
-					<tr>
-						<td colspan="4" id="daily_program">Daily Program</td>
-					</tr>
-					<tr th:each="exercise: ${dailyProgram}">
-						<td class="data"><span th:text="${exercise.exerciseName}"></span></td>
-						<td class="data"><span th:text="${exercise.complexity}"></span></td>
-						<td class="data"><span th:text="${set}">Sets</span></td>
-						<td class="data"><span th:text="${rep}">Reps</span></td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="new_program_main_area">
+				<table id="program">
+					<thead>
+						<tr>
+							<th class="title">Exercise Name</th>
+							<th class="title">Complexity</th>
+							<th class="title">Sets</th>
+							<th class="title">Repetitions</th>
+						</tr>
+					</thead>
+					<tbody th:each="dailyProgram: ${fullProgram}">
+						<tr>
+							<td colspan="4" id="daily_program">Daily Program</td>
+						</tr>
+						<tr th:each="exercise: ${dailyProgram}">
+							<td class="data"><span th:text="${exercise.exerciseName}"></span></td>
+							<td class="data"><span th:text="${exercise.complexity}"></span></td>
+							<td class="data"><span th:text="${set}">Sets</span></td>
+							<td class="data"><span th:text="${rep}">Reps</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 	<footer>

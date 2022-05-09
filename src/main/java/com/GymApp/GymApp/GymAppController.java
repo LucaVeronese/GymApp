@@ -46,7 +46,7 @@ public class GymAppController implements ErrorController{
 		// Check if email already exists
 		if (existingEmail != null) {
 			model.addObject("alreadyRegisteredMessage",
-					"Oops!  You have already registered with this email.");
+					"This email address has already been used");
 			model.setViewName("gym_signup_form");
 			bindingResult.reject("gymEmail");
 			return model;

@@ -1,5 +1,10 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url(dcc_ash.otf);
+}
+
 body {
-	font-family: Ariel;
+	font-family: 'coolvetica', 'sans-serif';
 	font-size: 15px;
 	line-height: 1.5;
 	background-color: #f4f4f4;
@@ -33,7 +38,7 @@ body {
 }
 
 .button:hover {
-	background-color: #4CAF50; /* Green */
+	background-color: red; /* Green */
 }
 
 .input_box {
@@ -119,6 +124,7 @@ header a:hover {
 .main_area {
 	min-height: 460px;
 	background: url('/img/background.jpg') 0 -400px;
+	box-shadow: inset 0 0 0 1000px rgba(0,0,0,.55);
 	text-align: center;
 	color: #ffffff;
 }
@@ -174,8 +180,14 @@ footer {
 }
 
 /* Program */
+
+#new_program_main_area {
+	width: 60%;
+	margin: auto;
+}
 #daily_program {
 	text-align: center;
+	padding: 10px 0 10px 10px
 }
 
 #program, #program th, #program td {
@@ -185,14 +197,15 @@ footer {
 #program {
 	border-collapse: collapse;
 	width: 100%;
+	margin: auto;
 	margin-bottom: 3%;
-	background: red;
+	background: #5D5D5D;
 }
 
 #program th {
 	text-align: left;
 	height: 40px;
-	background-color: #ffd9d9;
+	background-color: #4b4b4b;
 }
 
 #program td {
@@ -200,7 +213,7 @@ footer {
 }
 
 #program tr:nth-child(even) {
-	background-color: #ffd9d9;
+	background-color:#4b4b4b;
 }
 
 .data, .title {
@@ -242,7 +255,7 @@ footer {
 }
 
 #history_button:hover {
-	background-color: #4CAF50; /* Green */
+	background-color: red;
 }
 
 /* Media Queries */
